@@ -2,9 +2,9 @@ namespace Gemfruit.Mod
 {
     public enum Season
     {
-        SPRING,
-        SUMMER,
-        FALL,
-        WINTER
+        Spring,
+        Summer,
+        Fall,
+        Winter
     }
 }

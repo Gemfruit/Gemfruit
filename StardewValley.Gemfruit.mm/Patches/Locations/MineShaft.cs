@@ -61,10 +61,11 @@ namespace StardewValley.Locations
 
             if (spawnedEntity.IsPresent())
             {
-                var monsterConstructor = GemfruitMod.MineshaftMonsterRegistry.Get(spawnedEntity.Unwrap());
+                var monsterConstructor = GemfruitMod.MonsterRegistry.Get(spawnedEntity.Unwrap());
                 if (monsterConstructor.IsPresent())
                 {
-                    return monsterConstructor.Unwrap()(new MineshaftMonsterRegistry.SpawnData(this, mineRandom, position, getMineArea(), level));
+                    return monsterConstructor.Unwrap()
+                        .getMineshaftConstructor()(new MineshaftSpawnData(this, mineRandom, position, getMineArea(), level));
                 }
                 Console.Error.WriteLine($"Tried to spawn '{spawnedEntity.Unwrap()}', but was unable to find a registered constructor!");
             }

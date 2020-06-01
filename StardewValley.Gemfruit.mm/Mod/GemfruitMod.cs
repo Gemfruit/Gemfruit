@@ -19,10 +19,9 @@ namespace Gemfruit.Mod
         internal static readonly EventBus InitBus = new EventBus();
         internal static readonly EventBus GameBus = new EventBus();
 
+        public static MonsterRegistry MonsterRegistry { get; private set; }
         public static MineshaftSpawnRegistry MineshaftSpawnRegistry { get; private set; }
-        public static MineshaftMonsterRegistry MineshaftMonsterRegistry { get; private set; }
         public static WildernessSpawnRegistry WildernessSpawnRegistry { get; private set; }
-        public static WildernessMonsterRegistry WildernessMonsterRegistry { get; private set; }
         
         private static Dictionary<string, Type> _modList = new Dictionary<string, Type>();
 
@@ -33,9 +32,8 @@ namespace Gemfruit.Mod
             #else
                 Logger.MaskLevel = LogLevel.INFO;
             #endif
-            MineshaftMonsterRegistry = new MineshaftMonsterRegistry();
+            MonsterRegistry = new MonsterRegistry();
             MineshaftSpawnRegistry = new MineshaftSpawnRegistry();
-            WildernessMonsterRegistry = new WildernessMonsterRegistry();
             WildernessSpawnRegistry = new WildernessSpawnRegistry();
         }
 

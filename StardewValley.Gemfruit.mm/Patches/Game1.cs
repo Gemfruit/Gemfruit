@@ -16,7 +16,7 @@ namespace StardewValley
         protected override void Initialize()
         {
             Console.WriteLine(  "\n\n"+
-                                ".88888.                      .8888b                   oo   dP   \n"+
+                                ".88888.                       .8888b                   oo   dP   \n"+
                                 "d8'   `88                     88                            88   \n" +
                                 "88        .d8888b. 88d8b.d8b. 88aaa  88d888b. dP    dP dP d8888P \n"+
                                 "88   YP88 88ooood8 88'`88'`88 88     88'  `88 88    88 88   88   \n"+
@@ -28,9 +28,8 @@ namespace StardewValley
             {
                 GemfruitMod.LoadMods();
                 GemfruitMod.LoadInitHooks();
-                GemfruitMod.MineshaftMonsterRegistry.Initialize();
+                GemfruitMod.MonsterRegistry.Initialize();
                 GemfruitMod.MineshaftSpawnRegistry.Initialize();
-                GemfruitMod.WildernessMonsterRegistry.Initialize();
                 GemfruitMod.WildernessSpawnRegistry.Initialize();
                 GemfruitMod.LoadGameHooks();
             }

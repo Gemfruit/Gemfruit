@@ -5,11 +5,11 @@ using Gemfruit.Mod.Monsters;
 
 namespace Gemfruit.Mod.Events.Monsters
 {
-    public class MineshaftMonsterRegistrationEvent : PhasedEvent
+    public class MonsterRegistrationEvent : PhasedEvent
     {
-        public MineshaftMonsterRegistry Registry { get; }
+        public MonsterRegistry Registry { get; }
 
-        public MineshaftMonsterRegistrationEvent(MineshaftMonsterRegistry registry, EventPhase phase)
+        public MonsterRegistrationEvent(MonsterRegistry registry, EventPhase phase)
             : base(phase)
         {
             Registry = registry;

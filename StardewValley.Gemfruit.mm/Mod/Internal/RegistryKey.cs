@@ -8,7 +8,7 @@ namespace Gemfruit.Mod.Internal
             Key = key;
         }
 
-        public RegistryKey(string key) : this("stardew_valley", key)
+        internal RegistryKey(string key) : this("stardew_valley", key)
         {
             
         }
