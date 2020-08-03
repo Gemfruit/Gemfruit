@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
-using Gemfruit.Mod.Events;
+using Gemfruit.Mod.API.Events;
 
 namespace Gemfruit.Mod.Internal
 {
-    public class EventBus
+    internal class EventBus
     {
         private readonly Dictionary<Type, List<ISubscription>> _subscriptions;
 

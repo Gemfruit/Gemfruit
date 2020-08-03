@@ -1,6 +1,7 @@
 using System;
+using Gemfruit.Mod.API;
 
-namespace Gemfruit.Mod.Internal
+namespace Gemfruit.Mod.Internal.Exceptions
 {
     /// <summary>
     /// RegistryConflictException is an exception thrown when an <see cref="IRegistry{T}"/>

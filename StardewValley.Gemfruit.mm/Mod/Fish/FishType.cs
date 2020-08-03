@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Generic;
+using Gemfruit.Mod.World;
 
 namespace Gemfruit.Mod.Fish
 {
-    public class Fish
+    public class FishType
     {
         public string Name { get; }
         public int Difficulty { get; }
@@ -11,7 +12,7 @@ namespace Gemfruit.Mod.Fish
         public int MinSize { get; }
         public int MaxSize { get; }
         public List<Tuple<int, int>> TimeRanges { get; }
-        //public Season Season { get; }
+        public Season Season { get; }
         public FishWeather Weather { get; }
         public int MinDepth { get; }
         public float SpawnMultiplier { get; }

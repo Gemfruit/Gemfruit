@@ -1,6 +1,10 @@
 using System.Collections.Generic;
 using System.Diagnostics;
-using Gemfruit.Mod.Events.Monsters;
+using Gemfruit.Mod.API;
+using Gemfruit.Mod.API.Events;
+using Gemfruit.Mod.API.Events.Monsters;
+using Gemfruit.Mod.API.Utility;
+using Gemfruit.Mod.API.Utility.Registry;
 using Gemfruit.Mod.Internal;
 using StardewValley.Locations;
 using StardewValley.Monsters;
@@ -126,14 +130,14 @@ namespace Gemfruit.Mod.Monsters
                             wildernessFarmMonster = true
                         };
                     }));
-            Register(new MonsterType(new RegistryKey("galaxy_bat"))
+            Register(new MonsterType(new RegistryKey("wild_galaxy_bat"))
                 .setWildernessConstructor(
                     data => new Bat(data.position, 9999)
                     {
                         focusedOnFarmers = true,
                         wildernessFarmMonster = true
                     }));
-            Register(new MonsterType(new RegistryKey("iridium_bat"))
+            Register(new MonsterType(new RegistryKey("wild_iridium_bat"))
                 .setWildernessConstructor(
                     data => new Bat(data.position, 172)
                     {
@@ -147,26 +151,33 @@ namespace Gemfruit.Mod.Monsters
                         focusedOnFarmers = true,
                         wildernessFarmMonster = true
                     }));
-            Register(new MonsterType(new RegistryKey("lava_bat"))
+            Register(new MonsterType(new RegistryKey("wild_lava_bat"))
                 .setWildernessConstructor(
                     data => new Bat(data.position, 81)
                     {
                         focusedOnFarmers = true,
                         wildernessFarmMonster = true
                     }));
-            Register(new MonsterType(new RegistryKey("frost_bat"))
+            Register(new MonsterType(new RegistryKey("wild_frost_bat"))
                 .setWildernessConstructor(
                     data => new Bat(data.position, 41)
                     {
                         focusedOnFarmers = true,
                         wildernessFarmMonster = true
                     }));
-            Register(new MonsterType(new RegistryKey("wild_bat"))
+            Register(new MonsterType(new RegistryKey("wild_flying_bat"))
                 .setWildernessConstructor(
                     data => new Bat(data.position, 1)
                     {
                         focusedOnFarmers = true,
                         wildernessFarmMonster = true
+                    }));
+            
+            Register(new MonsterType(new RegistryKey("flying_fly"))
+                .setWildernessConstructor(
+                    data => new Fly(data.position)
+                    {
+                        focusedOnFarmers = true
                     }));
             GemfruitMod.InitBus.FireEvent(new MonsterRegistrationEvent(this, EventPhase.During));
             GemfruitMod.InitBus.FireEvent(new MonsterRegistrationEvent(this, EventPhase.After));

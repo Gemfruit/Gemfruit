@@ -23,11 +23,12 @@ namespace StardewValley
                                 "Y8.   .88 88.  ... 88  88  88 88     88       88.  .88 88   88   \n"+
                                 " `88888'  `88888P' dP  dP  dP dP     dP       `88888P' dP   dP   \n");
             Console.WriteLine($"Loading Gemfruit v{GemfruitMod.GemfruitVersion}");
-            GemfruitMod.Initialize();
+            GemfruitMod.Initialize(this);
             try
             {
                 GemfruitMod.LoadMods();
                 GemfruitMod.LoadInitHooks();
+                GemfruitMod.ResourceRegistry.Initialize();
                 GemfruitMod.MonsterRegistry.Initialize();
                 GemfruitMod.MineshaftSpawnRegistry.Initialize();
                 GemfruitMod.WildernessSpawnRegistry.Initialize();
@@ -42,6 +43,17 @@ namespace StardewValley
             }
 
             orig_Initialize();
+        }
+
+        protected extern void orig_LoadContent();
+        protected override void LoadContent()
+        {
+            GemfruitMod.Logger.Log(LogLevel.INFO, "Game1", "Loading mod assets...");
+            GemfruitMod.LoadAssets();
+            
+            GemfruitMod.ItemRegistry.Initialize();
+            orig_LoadContent();
+            throw new Exception("break me");
         }
     }
 }

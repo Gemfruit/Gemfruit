@@ -1,8 +1,8 @@
-namespace Gemfruit.Mod.Internal
+namespace Gemfruit.Mod.API.Utility.Registry
 {
     public abstract class PhasableRegistry
     {
-        protected RegistryPhase CurrentPhase { get; private set; } = RegistryPhase.Closed;
+        internal RegistryPhase CurrentPhase { get; private set; } = RegistryPhase.Closed;
         
         public void Initialize()
         {

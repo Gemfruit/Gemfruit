@@ -1,6 +1,4 @@
-using Gemfruit.Mod.Internal;
-
-namespace Gemfruit.Mod.Events
+namespace Gemfruit.Mod.API.Events
 {
     public class PhasedEvent : EventBase
     {

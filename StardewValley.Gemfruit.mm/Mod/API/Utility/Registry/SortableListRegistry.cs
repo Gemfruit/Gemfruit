@@ -1,7 +1,8 @@
 using System;
 using System.Collections.Generic;
+using Gemfruit.Mod.Internal;
 
-namespace Gemfruit.Mod.Internal
+namespace Gemfruit.Mod.API.Utility.Registry
 {
     public abstract class SortableListRegistry<TEnum, TValue> : PhasableRegistry
         where TEnum: Enum
@@ -18,19 +19,19 @@ namespace Gemfruit.Mod.Internal
             }
         }
         
-        public void Register(TEnum area, TValue chance)
+        public void Register(TEnum key, TValue value)
         {
             if (CurrentPhase == RegistryPhase.Open)
             {
                 GemfruitMod.Logger.Log(LogLevel.DEBUG, GetType().Name,
-                    $"Adding spawn chance for {chance}");
-                _dictionary[area].Add(chance);
-                _dictionary[area].Sort((x, y) => x.Priority - y.Priority);
+                    $"Registering value '{value}' @ '{key}'");
+                _dictionary[key].Add(value);
+                _dictionary[key].Sort((x, y) => x.Priority - y.Priority);
             }
             else
             {
                 GemfruitMod.Logger.Log(LogLevel.ERROR, GetType().Name,
-                    $"Attempted to register spawn for '{chance}' before corresponding lifecycle event!");
+                    $"Attempted to register value '{value}' before corresponding lifecycle event!");
             }
         }
     }

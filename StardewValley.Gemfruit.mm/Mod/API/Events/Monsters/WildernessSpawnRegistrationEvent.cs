@@ -1,20 +1,19 @@
-using Gemfruit.Mod.Internal;
 using Gemfruit.Mod.Monsters;
 
 // ReSharper disable MemberCanBePrivate.Global
 
-namespace Gemfruit.Mod.Events.Monsters
+namespace Gemfruit.Mod.API.Events.Monsters
 {
     public class WildernessSpawnRegistrationEvent : PhasedEvent
     {
         public WildernessSpawnRegistry Registry { get; }
-        public WildernessArea Area { get; }
+        public MonsterLocomotion Type { get; }
 
-        public WildernessSpawnRegistrationEvent(WildernessSpawnRegistry registry, EventPhase phase, WildernessArea area)
+        public WildernessSpawnRegistrationEvent(WildernessSpawnRegistry registry, EventPhase phase, MonsterLocomotion type)
             : base(phase)
         {
             Registry = registry;
-            Area = area;
+            Type = type;
         }
     }
 }

@@ -1,4 +1,4 @@
-namespace Gemfruit.Mod.Events
+namespace Gemfruit.Mod.API.Events
 {
     public class EventBase
     {

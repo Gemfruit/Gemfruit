@@ -1,4 +1,6 @@
 using System;
+using Gemfruit.Mod.API;
+using Gemfruit.Mod.API.Utility;
 using Gemfruit.Mod.Internal;
 using StardewValley.Locations;
 

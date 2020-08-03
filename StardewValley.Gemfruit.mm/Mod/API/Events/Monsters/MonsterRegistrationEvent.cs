@@ -1,9 +1,8 @@
-using Gemfruit.Mod.Internal;
 using Gemfruit.Mod.Monsters;
 
 // ReSharper disable MemberCanBePrivate.Global
 
-namespace Gemfruit.Mod.Events.Monsters
+namespace Gemfruit.Mod.API.Events.Monsters
 {
     public class MonsterRegistrationEvent : PhasedEvent
     {

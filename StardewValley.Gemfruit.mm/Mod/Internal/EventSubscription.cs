@@ -1,9 +1,9 @@
 using System;
-using Gemfruit.Mod.Events;
+using Gemfruit.Mod.API.Events;
 
 namespace Gemfruit.Mod.Internal
 {
-    public class EventSubscription<TEvent> : ISubscription 
+    internal class EventSubscription<TEvent> : ISubscription 
         where TEvent: EventBase
     {
         public Action<TEvent> Action;

@@ -1,4 +1,4 @@
-namespace Gemfruit.Mod
+namespace Gemfruit.Mod.World
 {
     public enum Season
     {

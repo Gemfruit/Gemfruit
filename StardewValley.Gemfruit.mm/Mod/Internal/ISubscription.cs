@@ -1,8 +1,8 @@
-using Gemfruit.Mod.Events;
+using Gemfruit.Mod.API.Events;
 
 namespace Gemfruit.Mod.Internal
 {
-    public interface ISubscription
+    internal interface ISubscription
     {
         void Invoke(EventBase eventBase);
     }

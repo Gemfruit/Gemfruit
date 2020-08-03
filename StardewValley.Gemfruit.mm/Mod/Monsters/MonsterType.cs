@@ -1,3 +1,4 @@
+using Gemfruit.Mod.API;
 using Gemfruit.Mod.Internal;
 using StardewValley.Monsters;
 

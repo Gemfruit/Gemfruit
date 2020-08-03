@@ -1,6 +1,6 @@
 namespace Gemfruit.Mod.Monsters
 {
-    public enum WildernessArea
+    public enum MonsterLocomotion
     {
         Ground,
         Flying

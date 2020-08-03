@@ -1,4 +1,4 @@
-namespace Gemfruit.Mod.Internal
+namespace Gemfruit.Mod.API.Events
 {
     public enum EventPhase
     {

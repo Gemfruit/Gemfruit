@@ -57,7 +57,7 @@ namespace StardewValley.Locations
             var currentArea = getAreaEnum();
             var position = tileToVector(xTile, yTile);
 
-            var spawnedEntity = GemfruitMod.MineshaftSpawnRegistry.Get(currentArea, this, mineRandom, level, xTile, yTile);
+            var spawnedEntity = GemfruitMod.MineshaftSpawnRegistry.Get(MonsterLocomotion.Ground, currentArea, this, mineRandom, level, xTile, yTile);
 
             if (spawnedEntity.IsPresent())
             {
