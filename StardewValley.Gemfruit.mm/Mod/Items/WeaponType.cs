@@ -4,7 +4,7 @@ namespace Gemfruit.Mod.Items
     {
         StabbingSword = 0,
         Dagger = 1,
-        Bashing = 2,
+        Club = 2,
         SlashingSword = 3,
         Slingshot = 4
     }

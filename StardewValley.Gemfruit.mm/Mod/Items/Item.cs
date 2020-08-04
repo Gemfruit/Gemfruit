@@ -2,13 +2,17 @@ using System;
 using System.Linq;
 using Gemfruit.Mod.API;
 using Gemfruit.Mod.API.Utility;
-using Gemfruit.Mod.Internal;
+using Microsoft.Xna.Framework;
 
 namespace Gemfruit.Mod.Items
 {
     public class Item
     {
         public RegistryKey Key { get; protected set; }
+        
+        public RegistryKey SpriteSheet { get; protected set; }
+        
+        public Rectangle Rect { get; protected set; }
         
         public string Name { get; protected set; }
         public int Price { get; protected set; }
@@ -82,6 +86,12 @@ namespace Gemfruit.Mod.Items
             }
 
             return Result<Item, Exception>.FromValue(i);
+        }
+
+        public void AssignSpriteSheetReference(RegistryKey sheet, Rectangle pos)
+        {
+            SpriteSheet = sheet;
+            Rect = pos;
         }
     }
 }

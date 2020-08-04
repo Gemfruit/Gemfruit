@@ -22,10 +22,10 @@ namespace Gemfruit.Mod.Resources
         
         public Optional<T> Get<T>(RegistryKey key)
         {
-            GemfruitMod.Logger.Log(LogLevel.DEBUG, "ResourceRegistry", $"Trying to fetch {key}");
+            //GemfruitMod.Logger.Log(LogLevel.DEBUG, "ResourceRegistry", $"Trying to fetch {key}");
             if (!_dictionary.ContainsKey(key))
             {
-                GemfruitMod.Logger.Log(LogLevel.DEBUG, "ResourceRegistry", "Key not found");
+                //GemfruitMod.Logger.Log(LogLevel.DEBUG, "ResourceRegistry", "Key not found");
                 return Optional<T>.None();
             }
 
@@ -34,7 +34,7 @@ namespace Gemfruit.Mod.Resources
                 throw new Exception($"bad type '{typeof(T)}' for asset '{key}'");
             }
 
-            GemfruitMod.Logger.Log(LogLevel.DEBUG, "ResourceRegistry", "Key found!!");
+            //GemfruitMod.Logger.Log(LogLevel.DEBUG, "ResourceRegistry", "Key found!!");
             return new Optional<T>((T)_dictionary[key]);
         }
 

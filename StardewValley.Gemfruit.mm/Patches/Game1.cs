@@ -53,7 +53,7 @@ namespace StardewValley
             
             GemfruitMod.ItemRegistry.Initialize();
             orig_LoadContent();
-            throw new Exception("break me");
+            //throw new Exception("break me");
         }
     }
 }

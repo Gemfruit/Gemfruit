@@ -4,9 +4,11 @@ using System.Linq;
 using Gemfruit.Mod.API;
 using Gemfruit.Mod.API.Events;
 using Gemfruit.Mod.API.Events.Items;
+using Gemfruit.Mod.API.Utility;
 using Gemfruit.Mod.API.Utility.Registry;
 using Gemfruit.Mod.Internal;
 using Gemfruit.Mod.Internal.Exceptions;
+using Microsoft.Xna.Framework;
 using StardewValley;
 
 namespace Gemfruit.Mod.Items
@@ -29,6 +31,20 @@ namespace Gemfruit.Mod.Items
                 .Replace(":", "")
                 .Replace("'", "");
         }
+
+        private static Rectangle ItemIDToRectangle(int id)
+        {
+            var x = id % 24 * 16;
+            var y = id / 24 * 16;
+            return new Rectangle(x, y, 16, 16);
+        }
+
+        private static Rectangle WeaponIDToRectangle(int id)
+        {
+            var x = id % 8 * 16;
+            var y = id / 8 * 16;
+            return new Rectangle(x, y, 16, 16);
+        }
         
         protected override void InitializeRecords()
         {
@@ -43,6 +59,7 @@ namespace Gemfruit.Mod.Items
                 else
                 {
                     var val = item.Unwrap();
+                    val.AssignSpriteSheetReference(new RegistryKey("Maps\\springobjects"), ItemIDToRectangle(i));
                     var key = new RegistryKey(SanitizeName(val.Name));
                     if (_dictionary.ContainsKey(key))
                     {
@@ -63,6 +80,7 @@ namespace Gemfruit.Mod.Items
                 else
                 {
                     var val = item.Unwrap();
+                    val.AssignSpriteSheetReference(new RegistryKey("TileSheets\\weapons"), WeaponIDToRectangle(i));
                     var key = new RegistryKey(SanitizeName(val.Name));
                     if (_dictionary.ContainsKey(key))
                     {
@@ -93,6 +111,13 @@ namespace Gemfruit.Mod.Items
                 GemfruitMod.Logger.Log(LogLevel.ERROR, GetType().Name,
                     $"Attempted to register '{key}' before corresponding lifecycle event!");
             }
+        }
+
+        public Optional<Item> Get(RegistryKey key)
+        {
+            return _dictionary.ContainsKey(key) ?
+                new Optional<Item>(_dictionary[key]) :
+                Optional<Item>.None();
         }
     }
 }

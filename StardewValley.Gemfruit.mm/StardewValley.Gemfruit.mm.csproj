@@ -1,0 +1,153 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{E72BBB97-F54F-43D2-AE18-DE73B4ECE67F}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Gemfruit</RootNamespace>
+    <AssemblyName>StardewValley.Gemfruit.mm</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Mono.Cecil, Version=0.11.2.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e">
+      <HintPath>..\..\..\Downloads\MonoMod-20.05.21.05-net35\Mono.Cecil.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil.Mdb, Version=0.11.2.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e">
+      <HintPath>..\..\..\Downloads\MonoMod-20.05.21.05-net35\Mono.Cecil.Mdb.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil.Pdb, Version=0.11.2.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e">
+      <HintPath>..\..\..\Downloads\MonoMod-20.05.21.05-net35\Mono.Cecil.Pdb.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil.Rocks, Version=0.11.2.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e">
+      <HintPath>..\..\..\Downloads\MonoMod-20.05.21.05-net35\Mono.Cecil.Rocks.dll</HintPath>
+    </Reference>
+    <Reference Include="MonoGame.Framework, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>../../../../../Applications/Stardew Valley.app/Contents/MacOS/MonoGame.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="MonoMod, Version=20.5.21.5, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\..\Downloads\MonoMod-20.05.21.05-net35\MonoMod.exe</HintPath>
+    </Reference>
+    <Reference Include="MonoMod.Common, Version=20.5.21.5, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\..\Downloads\MonoMod-20.05.21.05-net35\MonoMod.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="MonoMod.RuntimeDetour, Version=20.5.21.5, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\..\Downloads\MonoMod-20.05.21.05-net35\MonoMod.RuntimeDetour.dll</HintPath>
+    </Reference>
+    <Reference Include="MonoMod.Utils, Version=20.5.21.5, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\..\Downloads\MonoMod-20.05.21.05-net35\MonoMod.Utils.dll</HintPath>
+    </Reference>
+    <Reference Include="StardewValley, Version=1.3.7346.34259, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\..\Downloads\MonoMod-20.05.21.05-net35\StardewValley.exe</HintPath>
+    </Reference>
+    <Reference Include="StardewValley.GameData, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\..\Downloads\MonoMod-20.05.21.05-net35\StardewValley.GameData.dll</HintPath>
+    </Reference>
+    <Reference Include="System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+      <HintPath>..\..\..\..\..\Applications\Stardew Valley.app\Contents\MacOS\System.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+      <HintPath>..\..\..\..\..\Applications\Stardew Valley.app\Contents\MacOS\System.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+      <HintPath>..\..\..\..\..\Applications\Stardew Valley.app\Contents\MacOS\System.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+      <HintPath>..\..\..\..\..\Applications\Stardew Valley.app\Contents\MacOS\System.Xml.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Mod\API\Events\EventBase.cs" />
+    <Compile Include="Mod\API\Events\EventPhase.cs" />
+    <Compile Include="Mod\API\Events\Items\ItemRegistrationEvent.cs" />
+    <Compile Include="Mod\API\Events\Monsters\MineshaftSpawnRegistrationEvent.cs" />
+    <Compile Include="Mod\API\Events\Monsters\MonsterRegistrationEvent.cs" />
+    <Compile Include="Mod\API\Events\Monsters\WildernessSpawnRegistrationEvent.cs" />
+    <Compile Include="Mod\API\Events\PhasedEvent.cs" />
+    <Compile Include="Mod\API\Events\Resources\ResourceLoadEvent.cs" />
+    <Compile Include="Mod\API\GameBusHookAttribute.cs" />
+    <Compile Include="Mod\API\InitBusHookAttribute.cs" />
+    <Compile Include="Mod\API\ModuleAttribute.cs" />
+    <Compile Include="Mod\API\RegistryKey.cs" />
+    <Compile Include="Mod\API\Utility\IPrioritizable.cs" />
+    <Compile Include="Mod\API\Utility\Optional.cs" />
+    <Compile Include="Mod\API\Utility\Registry\MultiSortableListRegistry.cs" />
+    <Compile Include="Mod\API\Utility\Registry\PhasableRegistry.cs" />
+    <Compile Include="Mod\API\Utility\Registry\RegistryPhase.cs" />
+    <Compile Include="Mod\API\Utility\Registry\SortableListRegistry.cs" />
+    <Compile Include="Mod\API\Utility\Result.cs" />
+    <Compile Include="Mod\Internal\Exceptions\RegistryConflictException.cs" />
+    <Compile Include="Mod\Internal\HookLoader.cs" />
+    <Compile Include="Mod\Items\FoodBuff.cs" />
+    <Compile Include="Mod\Items\FoodType.cs" />
+    <Compile Include="Mod\Items\FurnitureType.cs" />
+    <Compile Include="Mod\Items\GeodeItem.cs" />
+    <Compile Include="Mod\Items\Item.cs" />
+    <Compile Include="Mod\Items\FoodItem.cs" />
+    <Compile Include="Mod\Items\ItemRegistry.cs" />
+    <Compile Include="Mod\Items\WeaponItem.cs" />
+    <Compile Include="Mod\Items\WeaponType.cs" />
+    <Compile Include="Mod\Monsters\MonsterLocomotion.cs" />
+    <Compile Include="Mod\Monsters\MonsterType.cs" />
+    <Compile Include="Mod\Monsters\MineshaftSpawnData.cs" />
+    <Compile Include="Mod\Monsters\WildernessSpawnChance.cs" />
+    <Compile Include="Mod\Monsters\WildernessSpawnData.cs" />
+    <Compile Include="Mod\Monsters\WildneressSpawnRegistry.cs" />
+    <Compile Include="Mod\Resources\ResourceRegistry.cs" />
+    <Compile Include="Mod\World\FarmType.cs" />
+    <Compile Include="Mod\Fish\FishType.cs" />
+    <Compile Include="Mod\Fish\FishAI.cs" />
+    <Compile Include="Mod\Fish\FishWeather.cs" />
+    <Compile Include="Mod\GemfruitMod.cs" />
+    <Compile Include="Mod\Internal\EventBus.cs" />
+    <Compile Include="Mod\Internal\EventSubscription.cs" />
+    <Compile Include="Mod\Internal\ISubscription.cs" />
+    <Compile Include="Mod\Internal\Logger.cs" />
+    <Compile Include="Mod\Monsters\MineshaftArea.cs" />
+    <Compile Include="Mod\Monsters\MonsterRegistry.cs" />
+    <Compile Include="Mod\Monsters\MineshaftSpawnRegistry.cs" />
+    <Compile Include="Mod\Monsters\MineshaftSpawnChance.cs" />
+    <Compile Include="Mod\Player\BuffType.cs" />
+    <Compile Include="Mod\World\Season.cs" />
+    <Compile Include="Patches\Buff.cs" />
+    <Compile Include="Patches\Game1.cs" />
+    <Compile Include="Patches\LocalizedContentManager.cs" />
+    <Compile Include="Patches\Locations\MineShaft.cs" />
+    <Compile Include="Patches\Menus\ChatBox.cs" />
+    <Compile Include="Patches\Menus\TitleMenu.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+         Other similar extension points exist, see Microsoft.Common.targets.
+    <Target Name="BeforeBuild">
+    </Target>
+    <Target Name="AfterBuild">
+    </Target>
+    -->
+</Project>

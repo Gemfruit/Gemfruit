@@ -1,5 +1,7 @@
 using System;
 using Gemfruit.Mod.API.Utility;
+using Netcode;
+using StardewValley;
 
 namespace Gemfruit.Mod.Items
 {
@@ -17,6 +19,27 @@ namespace Gemfruit.Mod.Items
         public int AreaOfEffect { get; protected set; }
         public float CritChance { get; protected set; }
         public float CritMultiplier { get; protected set; }
+
+        public int ItemLevel
+        {
+            get
+            {
+                var damageAverage = (MaximumDamage + MinimumDamage) / 2;
+                var speedModifier = 1.0 + 0.1 * (Math.Max(0, Speed) + (WeaponType == WeaponType.Dagger ? 15 : 0));
+                var dmgSpeed = damageAverage * speedModifier;
+                var bonus = Precision / 2 
+                            + Defense 
+                            + (CritChance - 0.02) * 100.0 
+                            + (CritMultiplier - 3.0) * 20.0;
+                var num = 0 + (int) dmgSpeed + (int) bonus;
+
+                if (WeaponType == WeaponType.Club)
+                    num /= 2;
+
+                return num / 5 + 1;
+            }
+
+        }
 
         internal static Result<WeaponItem, Exception> ParseFromString(string line)
         {
