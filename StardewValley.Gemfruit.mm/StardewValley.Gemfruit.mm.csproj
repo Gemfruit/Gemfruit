@@ -32,38 +32,38 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MMHOOK_StardewValley, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\Assemblies\MMHOOK_StardewValley.dll</HintPath>
+    </Reference>
     <Reference Include="Mono.Cecil, Version=0.11.2.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e">
-      <HintPath>..\..\..\Downloads\MonoMod-20.05.21.05-net35\Mono.Cecil.dll</HintPath>
+      <HintPath>..\Assemblies\Mono.Cecil.dll</HintPath>
     </Reference>
     <Reference Include="Mono.Cecil.Mdb, Version=0.11.2.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e">
-      <HintPath>..\..\..\Downloads\MonoMod-20.05.21.05-net35\Mono.Cecil.Mdb.dll</HintPath>
+      <HintPath>..\Assemblies\Mono.Cecil.Mdb.dll</HintPath>
     </Reference>
     <Reference Include="Mono.Cecil.Pdb, Version=0.11.2.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e">
-      <HintPath>..\..\..\Downloads\MonoMod-20.05.21.05-net35\Mono.Cecil.Pdb.dll</HintPath>
+      <HintPath>..\Assemblies\Mono.Cecil.Pdb.dll</HintPath>
     </Reference>
     <Reference Include="Mono.Cecil.Rocks, Version=0.11.2.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e">
-      <HintPath>..\..\..\Downloads\MonoMod-20.05.21.05-net35\Mono.Cecil.Rocks.dll</HintPath>
-    </Reference>
-    <Reference Include="MonoGame.Framework, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>../../../../../Applications/Stardew Valley.app/Contents/MacOS/MonoGame.Framework.dll</HintPath>
+      <HintPath>..\Assemblies\Mono.Cecil.Rocks.dll</HintPath>
     </Reference>
     <Reference Include="MonoMod, Version=20.5.21.5, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\..\Downloads\MonoMod-20.05.21.05-net35\MonoMod.exe</HintPath>
+      <HintPath>..\Assemblies\MonoMod.exe</HintPath>
     </Reference>
     <Reference Include="MonoMod.Common, Version=20.5.21.5, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\..\Downloads\MonoMod-20.05.21.05-net35\MonoMod.Common.dll</HintPath>
+      <HintPath>..\Assemblies\MonoMod.Common.dll</HintPath>
     </Reference>
     <Reference Include="MonoMod.RuntimeDetour, Version=20.5.21.5, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\..\Downloads\MonoMod-20.05.21.05-net35\MonoMod.RuntimeDetour.dll</HintPath>
+      <HintPath>..\Assemblies\MonoMod.RuntimeDetour.dll</HintPath>
     </Reference>
     <Reference Include="MonoMod.Utils, Version=20.5.21.5, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\..\Downloads\MonoMod-20.05.21.05-net35\MonoMod.Utils.dll</HintPath>
+      <HintPath>..\Assemblies\MonoMod.Utils.dll</HintPath>
     </Reference>
     <Reference Include="StardewValley, Version=1.3.7346.34259, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\..\Downloads\MonoMod-20.05.21.05-net35\StardewValley.exe</HintPath>
+      <HintPath>..\Assemblies\StardewValley.exe</HintPath>
     </Reference>
     <Reference Include="StardewValley.GameData, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\..\Downloads\MonoMod-20.05.21.05-net35\StardewValley.GameData.dll</HintPath>
+      <HintPath>..\Assemblies\StardewValley.GameData.dll</HintPath>
     </Reference>
     <Reference Include="System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
       <HintPath>..\..\..\..\..\Applications\Stardew Valley.app\Contents\MacOS\System.dll</HintPath>
@@ -76,6 +76,9 @@
     </Reference>
     <Reference Include="System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
       <HintPath>..\..\..\..\..\Applications\Stardew Valley.app\Contents\MacOS\System.Xml.dll</HintPath>
+    </Reference>
+    <Reference Include="MonoGame.Framework, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>../../../../../Applications/Stardew Valley.app/Contents/MacOS/MonoGame.Framework.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
