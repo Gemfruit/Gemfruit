@@ -1,6 +1,8 @@
 using System;
 using Gemfruit.Mod;
 using Gemfruit.Mod.Internal;
+using Microsoft.Xna.Framework.Graphics;
+using MonoMod;
 
 #pragma warning disable 108,114,626,649
 // ReSharper disable InconsistentNaming
@@ -53,7 +55,6 @@ namespace StardewValley
             
             GemfruitMod.ItemRegistry.Initialize();
             orig_LoadContent();
-            //throw new Exception("break me");
         }
     }
 }

@@ -45,7 +45,14 @@ namespace Gemfruit.Mod.Items
             var y = id / 8 * 16;
             return new Rectangle(x, y, 16, 16);
         }
-        
+
+        private static Point FurnitureIDToLocation(int id)
+        {
+            var x = id % 32 * 16;
+            var y = id / 32 * 16;
+            return new Point(x, y);
+        }
+
         protected override void InitializeRecords()
         {
             var dict = _content.Load<Dictionary<int, string>>("Data\\ObjectInformation");
@@ -89,6 +96,32 @@ namespace Gemfruit.Mod.Items
                     Register(key, val);
                 }
             }
+
+            var fdict = _content.Load<Dictionary<int, string>>("Data\\Furniture");
+            FurnitureItem.DefaultDescription = _content.LoadString("Strings\\StringsFromCSFiles:Furniture.cs.12623");
+            foreach (var i in fdict.Keys)
+            {
+                var item = FurnitureItem.ParseFromString(fdict[i]);
+                if (item.IsError())
+                {
+                    GemfruitMod.Logger.Log(LogLevel.ERROR, "ItemRegistry", item.Error().Message);
+                }
+                else
+                {
+                    var val = item.Unwrap();
+                    var r = val.Rect;
+                    r.Location = FurnitureIDToLocation(i);
+                    val.AssignSpriteSheetReference(new RegistryKey("TileSheets\\furniture"), r);
+                    
+                    var key = new RegistryKey(SanitizeName(val.Name));
+                    if (_dictionary.ContainsKey(key))
+                    {
+                        key = new RegistryKey(SanitizeName(val.Name) + "_" + i);
+                    }
+                    Register(key, val);
+                }
+            }
+            
             GemfruitMod.InitBus.FireEvent(new ItemRegistrationEvent(this, EventPhase.During));
             GemfruitMod.InitBus.FireEvent(new ItemRegistrationEvent(this, EventPhase.After));
         }

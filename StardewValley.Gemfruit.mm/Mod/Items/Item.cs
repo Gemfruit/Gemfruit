@@ -21,6 +21,8 @@ namespace Gemfruit.Mod.Items
         public int Category { get; protected set; }
         public string DisplayName { get; protected set; }
         public string Description { get; protected set; }
+        
+        public virtual int StackSize => 64;
 
         protected Item()
         {

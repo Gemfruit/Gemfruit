@@ -23,27 +23,13 @@ namespace StardewValley.Menus
         private const float increment = margin / 60.0f;
         protected extern void orig_draw(SpriteBatch b);
 
-        private static Gemfruit.Mod.Items.Item i = null;
-        
+        private static Rectangle render;
         
         public override void draw(SpriteBatch b) {
             orig_draw(b);
             var text = $"Using GemFruit v{GemfruitMod.GemfruitVersion}";
             var x = Game1.smallFont.MeasureString(text).X * scale / 2f;
-
-            if (i == null)
-            {
-                var it = GemfruitMod.ItemRegistry.Get(new RegistryKey("galaxy_hammer"));
-                if (!it.IsPresent())
-                {
-                    throw new Exception("couldn't get nekoite :(");
-                }
-
-                i = it.Unwrap();
-            }
             
-            b.Draw(Game1.content.Load<Texture2D>(i.SpriteSheet.Key), new Rectangle(0,0,128,128), i.Rect, Color.White);
-
             if (scale >= 1.0f + margin)
             {
                 rev = true;

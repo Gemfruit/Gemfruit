@@ -24,6 +24,46 @@ namespace Gemfruit.Mod.Items
 
     public static class FurnitureTypeExt
     {
+
+        public static FurnitureType FromString(string str)
+        {
+            switch (str)
+            {
+                case "chair":
+                    return FurnitureType.Chair;
+                case "bench":
+                    return FurnitureType.Bench;
+                case "couch":
+                    return FurnitureType.Couch;
+                case "armchair":
+                    return FurnitureType.Armchair;
+                case "dresser":
+                    return FurnitureType.Dresser;
+                case "long table":
+                    return FurnitureType.LongTable;
+                case "painting":
+                    return FurnitureType.Painting;
+                case "lamp":
+                    return FurnitureType.Lamp;
+                case "decor":
+                    return FurnitureType.Decor;
+                case "other":
+                    return FurnitureType.Other;
+                case "bookcase":
+                    return FurnitureType.Bookcase;
+                case "table":
+                    return FurnitureType.Table;
+                case "rug":
+                    return FurnitureType.Rug;
+                case "window":
+                    return FurnitureType.Window;
+                case "fireplace":
+                    return FurnitureType.Fireplace;
+                default:
+                    throw new Exception($"couldn't parse FurnitureType '{str}'");
+            }
+        } 
+        
         public static Point GetSizeForType(this FurnitureType type)
         {
             switch (type)
@@ -52,6 +92,35 @@ namespace Gemfruit.Mod.Items
                 default:
                     return new Point(16, 32);
             }
-        } 
+        }
+
+        public static Point GetBoundsForType(this FurnitureType type)
+        {
+            switch (type)
+            {
+                case FurnitureType.Chair:
+                case FurnitureType.Lamp:
+                case FurnitureType.Decor:
+                    return new Point(64,64);
+                case FurnitureType.Bench:
+                case FurnitureType.Painting:
+                case FurnitureType.Table:
+                    return new Point(128, 128);
+                case FurnitureType.Couch:
+                case FurnitureType.Rug:
+                    return new Point(192, 128);
+                case FurnitureType.Armchair:
+                case FurnitureType.Dresser:
+                case FurnitureType.Bookcase:
+                case FurnitureType.Fireplace:
+                    return new Point(128, 64);
+                case FurnitureType.LongTable:
+                    return new Point(320, 64);
+                case FurnitureType.Window:
+                    return new Point(64, 128);
+                default:
+                    return new Point(64, 64);
+            }
+        }
     }
 }

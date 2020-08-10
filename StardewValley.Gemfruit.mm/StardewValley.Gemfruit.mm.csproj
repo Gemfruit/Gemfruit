@@ -105,6 +105,7 @@
     <Compile Include="Mod\Internal\HookLoader.cs" />
     <Compile Include="Mod\Items\FoodBuff.cs" />
     <Compile Include="Mod\Items\FoodType.cs" />
+    <Compile Include="Mod\Items\FurnitureItem.cs" />
     <Compile Include="Mod\Items\FurnitureType.cs" />
     <Compile Include="Mod\Items\GeodeItem.cs" />
     <Compile Include="Mod\Items\Item.cs" />

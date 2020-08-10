@@ -20,6 +20,8 @@ namespace Gemfruit.Mod.Items
         public float CritChance { get; protected set; }
         public float CritMultiplier { get; protected set; }
 
+        public override int StackSize => 1;
+
         public int ItemLevel
         {
             get
@@ -90,11 +92,13 @@ namespace Gemfruit.Mod.Items
                 // index 13 - crit multiplier
                 i.CritMultiplier = float.Parse(parts[13]);
 
-                // TODO: Localization actually changes this. Figure it out.
-                i.DisplayName = i.Name;
-
+                // TODO: Better localization system.
+                i.DisplayName = parts.Length > 14 ? parts[14] : i.Name;
+                
+                // calculate this once, rather than continually
+                i.Price = i.ItemLevel * 100;
+                
                 // hardcoded defaults
-                i.Price = 0;
                 i.Edibility = 0;
                 i.Type = "Weapon";
                 i.Category = -98;
