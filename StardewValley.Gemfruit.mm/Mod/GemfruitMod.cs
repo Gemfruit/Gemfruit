@@ -8,9 +8,9 @@ using Gemfruit.Mod.API.Events;
 using Gemfruit.Mod.Internal;
 using Gemfruit.Mod.Items;
 using Gemfruit.Mod.Monsters;
+using Gemfruit.Mod.Placeables;
 using Gemfruit.Mod.Resources;
 using Microsoft.Xna.Framework.Graphics;
-using Mono.Cecil;
 using StardewValley;
 using Module = Gemfruit.Mod.API.Module;
 
@@ -25,6 +25,7 @@ namespace Gemfruit.Mod
         internal static readonly EventBus GameBus = new EventBus();
 
         public static ResourceRegistry ResourceRegistry { get; private set; }
+        public static PlaceableRegistry PlaceableRegistry { get; private set; }
         public static ItemRegistry ItemRegistry { get; private set; }
         public static MonsterRegistry MonsterRegistry { get; private set; }
         public static MineshaftSpawnRegistry MineshaftSpawnRegistry { get; private set; }
@@ -42,10 +43,11 @@ namespace Gemfruit.Mod
             #endif
             HookLoader.LoadHooks();
             ResourceRegistry = new ResourceRegistry();
+            PlaceableRegistry = new PlaceableRegistry(new LocalizedContentManager(game.Content.ServiceProvider, game.Content.RootDirectory));
+            ItemRegistry = new ItemRegistry(new LocalizedContentManager(game.Content.ServiceProvider, game.Content.RootDirectory));
             MonsterRegistry = new MonsterRegistry();
             MineshaftSpawnRegistry = new MineshaftSpawnRegistry();
             WildernessSpawnRegistry = new WildernessSpawnRegistry();
-            ItemRegistry = new ItemRegistry(new LocalizedContentManager(game.Content.ServiceProvider, game.Content.RootDirectory));
         }
 
         public static void LoadMods()

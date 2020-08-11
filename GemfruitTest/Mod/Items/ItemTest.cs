@@ -21,7 +21,7 @@ namespace GemfruitTest.Mod.Items
             
             Assert.AreEqual(40, i.Price);
             
-            Assert.AreEqual(-300, i.Edibility);
+            Assert.AreEqual(null, i.Capabilities.Find(c => c is EdibleItemCapability));
             
             Assert.AreEqual("Seeds", i.Type);
             

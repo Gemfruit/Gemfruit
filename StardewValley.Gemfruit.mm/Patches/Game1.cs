@@ -52,7 +52,7 @@ namespace StardewValley
         {
             GemfruitMod.Logger.Log(LogLevel.INFO, "Game1", "Loading mod assets...");
             GemfruitMod.LoadAssets();
-            
+            GemfruitMod.PlaceableRegistry.Initialize();
             GemfruitMod.ItemRegistry.Initialize();
             orig_LoadContent();
         }

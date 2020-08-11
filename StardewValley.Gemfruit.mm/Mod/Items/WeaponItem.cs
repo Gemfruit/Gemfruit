@@ -1,7 +1,5 @@
 using System;
 using Gemfruit.Mod.API.Utility;
-using Netcode;
-using StardewValley;
 
 namespace Gemfruit.Mod.Items
 {
@@ -99,7 +97,6 @@ namespace Gemfruit.Mod.Items
                 i.Price = i.ItemLevel * 100;
                 
                 // hardcoded defaults
-                i.Edibility = 0;
                 i.Type = "Weapon";
                 i.Category = -98;
             }

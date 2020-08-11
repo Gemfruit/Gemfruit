@@ -1,7 +1,9 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Gemfruit.Mod.API;
 using Gemfruit.Mod.API.Utility;
+using Gemfruit.Mod.Internal;
 using Microsoft.Xna.Framework;
 
 namespace Gemfruit.Mod.Items
@@ -16,13 +18,13 @@ namespace Gemfruit.Mod.Items
         
         public string Name { get; protected set; }
         public int Price { get; protected set; }
-        public int Edibility { get; protected set; }
         public string Type { get; protected set; }
         public int Category { get; protected set; }
         public string DisplayName { get; protected set; }
         public string Description { get; protected set; }
+        public List<ItemCapability> Capabilities { get; protected set; }
         
-        public virtual int StackSize => 64;
+        public virtual int StackSize => 999;
 
         protected Item()
         {
@@ -34,7 +36,6 @@ namespace Gemfruit.Mod.Items
             Key = bas.Key;
             Name = bas.Name;
             Price = bas.Price;
-            Edibility = bas.Edibility;
             Type = bas.Type;
             Category = bas.Category;
             DisplayName = bas.DisplayName;
@@ -45,6 +46,7 @@ namespace Gemfruit.Mod.Items
         {
             var i = new Item();
             var parts = line.Split('/');
+            i.Capabilities = new List<ItemCapability>();
 
             try
             {
@@ -53,7 +55,7 @@ namespace Gemfruit.Mod.Items
                 // index 1 - Price
                 i.Price = int.Parse(parts[1]);
                 // index 2 - edibility
-                i.Edibility = int.Parse(parts[2]);
+                var edible = int.Parse(parts[2]);
                 // index 3 - type & category
                 var tc = parts[3].Split(' ');
                 i.Type = tc[0];
@@ -68,10 +70,19 @@ namespace Gemfruit.Mod.Items
                     switch (parts[6].ToLower())
                     {
                         case "food":
-                            i = new FoodItem(i, FoodType.Food, new FoodBuff(parts[7].Split().Select(int.Parse).ToList(), int.Parse(parts[8])));
+                            i.Capabilities.Add(new EdibleItemCapability(edible, FoodType.Food,
+                                new FoodBuff(parts[7].Split().Select(int.Parse).ToList(), 
+                                    int.Parse(parts[8]))));
                             break;
                         case "drink":
-                            i = new FoodItem(i, FoodType.Drink, new FoodBuff(parts[7].Split().Select(int.Parse).ToList(), int.Parse(parts[8])));
+                            i.Capabilities.Add(new EdibleItemCapability(edible, FoodType.Drink,
+                                new FoodBuff(parts[7].Split().Select(int.Parse).ToList(), 
+                                    int.Parse(parts[8]))));
+                            break;
+                        default:
+                            GemfruitMod.Logger.Log(LogLevel.WARNING, "Item", "Item created from vanilla " +
+                                                                             "string with edibility but no food type " +
+                                                                             "specifier - ignoring edibility");
                             break;
                     }
                 }
