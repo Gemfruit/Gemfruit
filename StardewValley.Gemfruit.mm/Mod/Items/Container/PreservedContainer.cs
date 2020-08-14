@@ -2,18 +2,18 @@ using System.Collections.Generic;
 using Gemfruit.Mod.API;
 using Gemfruit.Mod.Internal;
 
-namespace Gemfruit.Mod.Items
+namespace Gemfruit.Mod.Items.Container
 {
     public class PreservedContainer : IContainer
     {
-        public RegistryKey PreservableItem { get; protected set; }
+        public ResourceKey PreservableItem { get; protected set; }
 
         public void DeserializeFrom(IReadOnlyDictionary<string, object> dict)
         {
             object tmp;
             if (dict.TryGetValue("preservable_item", out tmp))
             {
-                if (tmp is RegistryKey key)
+                if (tmp is ResourceKey key)
                 {
                     PreservableItem = key;
                 }

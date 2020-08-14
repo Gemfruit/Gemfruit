@@ -12,14 +12,14 @@ namespace Gemfruit.Mod.Monsters
     {
         public int Priority { get; }
 
-        public RegistryKey Monster { get; }
+        public ResourceKey Monster { get; }
         public int FirstLevel { get; }
         public int LastLevel { get; }
         private MineLevelPredicate _spawnPredicate;
 
         private static MineLevelPredicate _defer = (s, r, x, y) => true;
 
-        public MineshaftSpawnChance(RegistryKey monster, int firstLevel, int lastLevel, int priority,
+        public MineshaftSpawnChance(ResourceKey monster, int firstLevel, int lastLevel, int priority,
             MineLevelPredicate spawnPredicate = null)
         {
             Monster = monster;

@@ -13,8 +13,8 @@ namespace Gemfruit.Mod.Monsters
 {
     public class MonsterRegistry
     {
-        private readonly Dictionary<RegistryKey, MonsterType> _types =
-            new Dictionary<RegistryKey, MonsterType>();
+        private readonly Dictionary<ResourceKey, MonsterType> _types =
+            new Dictionary<ResourceKey, MonsterType>();
 
         private RegistryPhase _currentPhase = RegistryPhase.Closed;
 
@@ -40,7 +40,7 @@ namespace Gemfruit.Mod.Monsters
             }
         }
 
-        public Optional<MonsterType> Get(RegistryKey key)
+        public Optional<MonsterType> Get(ResourceKey key)
         {
             if (_currentPhase == RegistryPhase.Frozen)
             {
@@ -63,61 +63,61 @@ namespace Gemfruit.Mod.Monsters
         {
             _currentPhase = RegistryPhase.Open;
             GemfruitMod.InitBus.FireEvent(new MonsterRegistrationEvent(this, EventPhase.Before));
-            Register(new MonsterType(new RegistryKey("green_slime"))
+            Register(new MonsterType(new ResourceKey("green_slime"))
                 .setMineshaftConstructor(data => new GreenSlime(data.Position, data.Level)));
-            Register(new MonsterType(new RegistryKey("big_slime"))
+            Register(new MonsterType(new ResourceKey("big_slime"))
                 .setMineshaftConstructor(data => new BigSlime(data.Position, data.Area)));
-            Register(new MonsterType(new RegistryKey("bug"))
+            Register(new MonsterType(new ResourceKey("bug"))
                 .setMineshaftConstructor(data => new Bug(data.Position,
                     data.Rand.Next(4), data.Shaft)));
-            Register(new MonsterType(new RegistryKey("duggy"))
+            Register(new MonsterType(new ResourceKey("duggy"))
                 .setMineshaftConstructor(data => new Duggy(data.Position)));
-            Register(new MonsterType(new RegistryKey("rock_crab"))
+            Register(new MonsterType(new ResourceKey("rock_crab"))
                 .setMineshaftConstructor(data => new RockCrab(data.Position)));
-            Register(new MonsterType(new RegistryKey("fly"))
+            Register(new MonsterType(new ResourceKey("fly"))
                 .setMineshaftConstructor(data => new Fly(data.Position)));
-            Register(new MonsterType(new RegistryKey("grub"))
+            Register(new MonsterType(new ResourceKey("grub"))
                 .setMineshaftConstructor(data => new Grub(data.Position)));
-            Register(new MonsterType(new RegistryKey("bat"))
+            Register(new MonsterType(new ResourceKey("bat"))
                 .setMineshaftConstructor(data => new Bat(data.Position, data.Level)));
-            Register(new MonsterType(new RegistryKey("rock_golem"))
+            Register(new MonsterType(new ResourceKey("rock_golem"))
                 .setMineshaftConstructor(data => new RockGolem(data.Position, data.Shaft)));
-            Register(new MonsterType(new RegistryKey("skeleton"))
+            Register(new MonsterType(new ResourceKey("skeleton"))
                 .setMineshaftConstructor(data => new Skeleton(data.Position)));
-            Register(new MonsterType(new RegistryKey("dust_spirit"))
+            Register(new MonsterType(new ResourceKey("dust_spirit"))
                 .setMineshaftConstructor(data => new DustSpirit(data.Position, 
                     data.Rand.NextDouble() < 0.8)));
-            Register(new MonsterType(new RegistryKey("ghost"))
+            Register(new MonsterType(new ResourceKey("ghost"))
                 .setMineshaftConstructor(
                     data =>
                     {
                         data.Shaft.setGhostAdded(true);
                         return new Ghost(data.Position);
                     }));
-            Register(new MonsterType(new RegistryKey("metal_head"))
+            Register(new MonsterType(new ResourceKey("metal_head"))
                 .setMineshaftConstructor(data => new MetalHead(data.Position, data.Area)));
-            Register(new MonsterType(new RegistryKey("shadow_brute"))
+            Register(new MonsterType(new ResourceKey("shadow_brute"))
                 .setMineshaftConstructor(data => new ShadowBrute(data.Position)));
-            Register(new MonsterType(new RegistryKey("shadow_shaman"))
+            Register(new MonsterType(new ResourceKey("shadow_shaman"))
                 .setMineshaftConstructor(data => new ShadowShaman(data.Position)));
-            Register(new MonsterType(new RegistryKey("lava_crab"))
+            Register(new MonsterType(new ResourceKey("lava_crab"))
                 .setMineshaftConstructor(data => new RockCrab(data.Position, "Lava Crab")));
-            Register(new MonsterType(new RegistryKey("squid_kid"))
+            Register(new MonsterType(new ResourceKey("squid_kid"))
                 .setMineshaftConstructor(data => new SquidKid(data.Position)));
             
-            Register(new MonsterType(new RegistryKey("wild_shadow_brute"))
+            Register(new MonsterType(new ResourceKey("wild_shadow_brute"))
                 .setWildernessConstructor(
                     data => new ShadowBrute(data.position)
                     {
                         focusedOnFarmers = true, wildernessFarmMonster = true
                     }));
-            Register(new MonsterType(new RegistryKey("wild_golem"))
+            Register(new MonsterType(new ResourceKey("wild_golem"))
                 .setWildernessConstructor(
                     data => new RockGolem(data.position, data.player.combatLevel)
                     {
                         focusedOnFarmers = true, wildernessFarmMonster = true
                     }));
-            Register(new MonsterType(new RegistryKey("wild_slime"))
+            Register(new MonsterType(new ResourceKey("wild_slime"))
                 .setWildernessConstructor(
                     data =>
                     {
@@ -130,42 +130,42 @@ namespace Gemfruit.Mod.Monsters
                             wildernessFarmMonster = true
                         };
                     }));
-            Register(new MonsterType(new RegistryKey("wild_galaxy_bat"))
+            Register(new MonsterType(new ResourceKey("wild_galaxy_bat"))
                 .setWildernessConstructor(
                     data => new Bat(data.position, 9999)
                     {
                         focusedOnFarmers = true,
                         wildernessFarmMonster = true
                     }));
-            Register(new MonsterType(new RegistryKey("wild_iridium_bat"))
+            Register(new MonsterType(new ResourceKey("wild_iridium_bat"))
                 .setWildernessConstructor(
                     data => new Bat(data.position, 172)
                     {
                         focusedOnFarmers = true,
                         wildernessFarmMonster = true
                     }));
-            Register(new MonsterType(new RegistryKey("wild_serpent"))
+            Register(new MonsterType(new ResourceKey("wild_serpent"))
                 .setWildernessConstructor(
                     data => new Serpent(data.position)
                     {
                         focusedOnFarmers = true,
                         wildernessFarmMonster = true
                     }));
-            Register(new MonsterType(new RegistryKey("wild_lava_bat"))
+            Register(new MonsterType(new ResourceKey("wild_lava_bat"))
                 .setWildernessConstructor(
                     data => new Bat(data.position, 81)
                     {
                         focusedOnFarmers = true,
                         wildernessFarmMonster = true
                     }));
-            Register(new MonsterType(new RegistryKey("wild_frost_bat"))
+            Register(new MonsterType(new ResourceKey("wild_frost_bat"))
                 .setWildernessConstructor(
                     data => new Bat(data.position, 41)
                     {
                         focusedOnFarmers = true,
                         wildernessFarmMonster = true
                     }));
-            Register(new MonsterType(new RegistryKey("wild_flying_bat"))
+            Register(new MonsterType(new ResourceKey("wild_flying_bat"))
                 .setWildernessConstructor(
                     data => new Bat(data.position, 1)
                     {
@@ -173,7 +173,7 @@ namespace Gemfruit.Mod.Monsters
                         wildernessFarmMonster = true
                     }));
             
-            Register(new MonsterType(new RegistryKey("flying_fly"))
+            Register(new MonsterType(new ResourceKey("flying_fly"))
                 .setWildernessConstructor(
                     data => new Fly(data.position)
                     {

@@ -12,13 +12,13 @@ namespace Gemfruit.Mod.Monsters
     {
         public int Priority { get; }
         
-        public RegistryKey Monster { get; }
+        public ResourceKey Monster { get; }
         private WildernessSpawnPredicate _spawnPredicate;
 
         private static WildernessSpawnPredicate _defer = (f, p, r) => true;
         
         
-        public WildernessSpawnChance(RegistryKey monster, int priority,
+        public WildernessSpawnChance(ResourceKey monster, int priority,
             WildernessSpawnPredicate spawnPredicate = null)
         {
             Monster = monster;

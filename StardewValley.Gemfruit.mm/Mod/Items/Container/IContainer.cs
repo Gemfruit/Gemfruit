@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Gemfruit.Mod.Items
+namespace Gemfruit.Mod.Items.Container
 {
     public interface IContainer
     { 

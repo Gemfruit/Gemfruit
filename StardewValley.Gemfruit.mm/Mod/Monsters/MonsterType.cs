@@ -10,11 +10,11 @@ namespace Gemfruit.Mod.Monsters
     
     public class MonsterType
     {
-        private RegistryKey name;
+        private ResourceKey name;
         private MineshaftConstructor _mineshaftConstructor;
         private WildernessConstructor _wildernessConstructor;
 
-        public MonsterType(RegistryKey name)
+        public MonsterType(ResourceKey name)
         {
             this.name = name;
             _mineshaftConstructor =
@@ -56,7 +56,7 @@ namespace Gemfruit.Mod.Monsters
             return _wildernessConstructor;
         }
 
-        public RegistryKey getName()
+        public ResourceKey getName()
         {
             return name;
         }

@@ -17,8 +17,8 @@ namespace Gemfruit.Mod.Placeables
     public class PlaceableRegistry : PhasableRegistry
     {
         private readonly LocalizedContentManager _content;
-        private readonly Dictionary<RegistryKey, Placeable> _dictionary = new Dictionary<RegistryKey, Placeable>();
-        private static readonly Dictionary<RegistryKey, Action<Placeable>> ATTACHMENT_ACTIONS = new Dictionary<RegistryKey, Action<Placeable>>();
+        private readonly Dictionary<ResourceKey, Placeable> _dictionary = new Dictionary<ResourceKey, Placeable>();
+        private static readonly Dictionary<ResourceKey, Action<Placeable>> ATTACHMENT_ACTIONS = new Dictionary<ResourceKey, Action<Placeable>>();
         private static string _furnitureDefaultDesc;
         
         internal static Point FurnitureIDToLocation(int id)
@@ -27,12 +27,28 @@ namespace Gemfruit.Mod.Placeables
             var y = id / 32 * 16;
             return new Point(x, y);
         }
+        
+        internal static Point CraftableIDToLocation(int id)
+        {
+            var x = id % 8 * 16;
+            var y = id / 8 * 32;
+            return new Point(x, y);
+        }
+        
         public PlaceableRegistry(LocalizedContentManager content)
         {
             _content = content;
         }
         
         protected override void InitializeRecords()
+        {
+            VanillaRegistrations();
+            
+            GemfruitMod.InitBus.FireEvent(new PlaceableRegistrationEvent(this, EventPhase.During));
+            GemfruitMod.InitBus.FireEvent(new PlaceableRegistrationEvent(this, EventPhase.After));
+        }
+
+        internal void VanillaRegistrations()
         {
             var fdict = _content.Load<Dictionary<int, string>>("Data\\Furniture");
             _furnitureDefaultDesc = _content.LoadString("Strings\\StringsFromCSFiles:Furniture.cs.12623");
@@ -48,31 +64,57 @@ namespace Gemfruit.Mod.Placeables
                     var val = plac.Unwrap();
                     var r = val.Rect;
                     r.Location = FurnitureIDToLocation(i);
-                    val.AssignSpriteSheetReference(new RegistryKey("TileSheets\\furniture"), r);
+                    val.AssignSpriteSheetReference(new ResourceKey("TileSheets\\furniture"), r);
 
-                    var key = new RegistryKey(StringUtility.SanitizeName(val.Name));
-                    if (_dictionary.ContainsKey(key))
+                    val.Key = new ResourceKey(StringUtility.SanitizeName(val.Name));
+                    if (_dictionary.ContainsKey(val.Key))
                     {
-                        key = new RegistryKey(StringUtility.SanitizeName(val.Name) + "_" + i);
+                        val.Key = new ResourceKey(StringUtility.SanitizeName(val.Name) + "_" + i);
                     }
 
-                    Register(key, val);
+                    Register(val.Key, val);
                 }
             }
             
-            GemfruitMod.InitBus.FireEvent(new PlaceableRegistrationEvent(this, EventPhase.During));
-            GemfruitMod.InitBus.FireEvent(new PlaceableRegistrationEvent(this, EventPhase.After));
+            var cdict = _content.Load<Dictionary<int, string>>("Data\\BigCraftablesInformation");
+            foreach (var i in cdict.Keys)
+            {
+                var plac = Placeable.ParseFromBigCraftableString(cdict[i]);
+                if (plac.IsError())
+                {
+                    GemfruitMod.Logger.Log(LogLevel.ERROR, "PlaceableRegistry", plac.Error().Message);
+                }
+                else
+                {
+                    var val = plac.Unwrap();
+                    var r = val.Rect;
+                    r.Location = CraftableIDToLocation(i);
+                    val.AssignSpriteSheetReference(new ResourceKey("TileSheets\\Craftables"), r);
+
+                    val.Key = new ResourceKey(StringUtility.SanitizeName(val.Name));
+                    if (_dictionary.ContainsKey(val.Key))
+                    {
+                        val.Key = new ResourceKey(StringUtility.SanitizeName(val.Name) + "_" + i);
+                    }
+
+                    Register(val.Key, val);
+                }
+            }
         }
 
         internal void RegisterPlaceableItems(ItemRegistry r)
         {
             foreach (var fi in _dictionary.Values.Select(f => f.GetPlaceableItem()))
             {
+                if (r.Get(fi.Key).IsPresent())
+                {
+                    fi.Key = new ResourceKey(fi.Key.Namespace, fi.Key.Key + "_placeable");
+                }
                 r.Register(fi.Key, fi);
             }
         }
         
-        public void Register(RegistryKey key, Placeable plac)
+        public void Register(ResourceKey key, Placeable plac)
         {
             if (CurrentPhase == RegistryPhase.Open)
             {
@@ -97,7 +139,7 @@ namespace Gemfruit.Mod.Placeables
             }
         }
 
-        public Optional<Placeable> Get(RegistryKey key)
+        public Optional<Placeable> Get(ResourceKey key)
         {
             return _dictionary.ContainsKey(key) ?
                 new Optional<Placeable>(_dictionary[key]) :

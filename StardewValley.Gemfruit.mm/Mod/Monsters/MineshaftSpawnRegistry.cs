@@ -12,13 +12,13 @@ namespace Gemfruit.Mod.Monsters
 {
     public class MineshaftSpawnRegistry : MultiSortableListRegistry<MineshaftArea, MonsterLocomotion, MineshaftSpawnChance>
     {
-        public Optional<RegistryKey> Get(MonsterLocomotion type, MineshaftArea area, MineShaft shaft, Random rand, int level, int xTile, int yTile)
+        public Optional<ResourceKey> Get(MonsterLocomotion type, MineshaftArea area, MineShaft shaft, Random rand, int level, int xTile, int yTile)
         {
             if (CurrentPhase == RegistryPhase.Frozen)
             {
                 foreach (var p in Dictionary[type][area].Where(p => p.Evaluate(shaft, rand, level, xTile, yTile)))
                 {
-                    return new Optional<RegistryKey>(p.Monster);
+                    return new Optional<ResourceKey>(p.Monster);
                 }
             }
             else
@@ -27,7 +27,7 @@ namespace Gemfruit.Mod.Monsters
                     $"Attempted to get spawn for area '{area}' before registration was done!");
             }
 
-            return Optional<RegistryKey>.None();
+            return Optional<ResourceKey>.None();
         }
 
         protected override void InitializeRecords()
@@ -61,9 +61,9 @@ namespace Gemfruit.Mod.Monsters
             // SPECIAL - Slime Infestation
             GemfruitMod.InitBus.FireEvent(new MineshaftSpawnRegistrationEvent(this, EventPhase.Before, MonsterLocomotion.Ground, MineshaftArea.SlimeArea));
             Register(MonsterLocomotion.Ground, MineshaftArea.SlimeArea,
-                new MineshaftSpawnChance(new RegistryKey("big_slime"), 0, 0, 1, InfestedBigSlimePredicate));
+                new MineshaftSpawnChance(new ResourceKey("big_slime"), 0, 0, 1, InfestedBigSlimePredicate));
             Register(MonsterLocomotion.Ground, MineshaftArea.SlimeArea,
-                new MineshaftSpawnChance(new RegistryKey("green_slime"), 0, 0, 2));
+                new MineshaftSpawnChance(new ResourceKey("green_slime"), 0, 0, 2));
             GemfruitMod.InitBus.FireEvent(new MineshaftSpawnRegistrationEvent(this, EventPhase.During, MonsterLocomotion.Ground, MineshaftArea.SlimeArea));
             GemfruitMod.InitBus.FireEvent(new MineshaftSpawnRegistrationEvent(this, EventPhase.After, MonsterLocomotion.Ground, MineshaftArea.SlimeArea));
             
@@ -74,10 +74,10 @@ namespace Gemfruit.Mod.Monsters
             // SPECIAL - Dino Area
             GemfruitMod.InitBus.FireEvent(new MineshaftSpawnRegistrationEvent(this, EventPhase.Before, MonsterLocomotion.Ground, MineshaftArea.DinoArea));
             Register(MonsterLocomotion.Ground, MineshaftArea.DinoArea,
-                new MineshaftSpawnChance(new RegistryKey("iridium_bat"), 0, 0, 1, DinoAreaPredicate));
+                new MineshaftSpawnChance(new ResourceKey("iridium_bat"), 0, 0, 1, DinoAreaPredicate));
             Register(MonsterLocomotion.Ground, MineshaftArea.DinoArea,
-                new MineshaftSpawnChance(new RegistryKey("mutant_fly"), 0, 0, 2, DinoAreaPredicate));
-            Register(MonsterLocomotion.Ground, MineshaftArea.DinoArea, new MineshaftSpawnChance(new RegistryKey("pepper_rex"), 0, 0, 999));
+                new MineshaftSpawnChance(new ResourceKey("mutant_fly"), 0, 0, 2, DinoAreaPredicate));
+            Register(MonsterLocomotion.Ground, MineshaftArea.DinoArea, new MineshaftSpawnChance(new ResourceKey("pepper_rex"), 0, 0, 999));
             GemfruitMod.InitBus.FireEvent(new MineshaftSpawnRegistrationEvent(this, EventPhase.During, MonsterLocomotion.Ground, MineshaftArea.DinoArea));
             GemfruitMod.InitBus.FireEvent(new MineshaftSpawnRegistrationEvent(this, EventPhase.After, MonsterLocomotion.Ground, MineshaftArea.DinoArea));
             
@@ -89,12 +89,12 @@ namespace Gemfruit.Mod.Monsters
             // Floors 0 - 9 - Surface
             GemfruitMod.InitBus.FireEvent(new MineshaftSpawnRegistrationEvent(this, EventPhase.Before, MonsterLocomotion.Ground, MineshaftArea.Surface));
             Register(MonsterLocomotion.Ground, MineshaftArea.Surface,
-                new MineshaftSpawnChance(new RegistryKey("bug"), 0, 9, -1, RandomBugPredicate));
+                new MineshaftSpawnChance(new ResourceKey("bug"), 0, 9, -1, RandomBugPredicate));
             Register(MonsterLocomotion.Ground, MineshaftArea.Surface,
-                new MineshaftSpawnChance(new RegistryKey("duggy"), 0, 9, 1, DuggyPredicate));
+                new MineshaftSpawnChance(new ResourceKey("duggy"), 0, 9, 1, DuggyPredicate));
             Register(MonsterLocomotion.Ground, MineshaftArea.Surface,
-                new MineshaftSpawnChance(new RegistryKey("rock_crab"), 0, 9, 2, RockCrabPredicate));
-            Register(MonsterLocomotion.Ground, MineshaftArea.Surface, new MineshaftSpawnChance(new RegistryKey("green_slime"), 0, 9, 999));
+                new MineshaftSpawnChance(new ResourceKey("rock_crab"), 0, 9, 2, RockCrabPredicate));
+            Register(MonsterLocomotion.Ground, MineshaftArea.Surface, new MineshaftSpawnChance(new ResourceKey("green_slime"), 0, 9, 999));
             GemfruitMod.InitBus.FireEvent(new MineshaftSpawnRegistrationEvent(this, EventPhase.During, MonsterLocomotion.Ground, MineshaftArea.Surface));
             GemfruitMod.InitBus.FireEvent(new MineshaftSpawnRegistrationEvent(this, EventPhase.After, MonsterLocomotion.Ground, MineshaftArea.Surface));
 
@@ -105,66 +105,66 @@ namespace Gemfruit.Mod.Monsters
             // Floors 10 - 30 - Underground
             GemfruitMod.InitBus.FireEvent(new MineshaftSpawnRegistrationEvent(this, EventPhase.Before, MonsterLocomotion.Ground, MineshaftArea.Underground));
             Register(MonsterLocomotion.Ground, MineshaftArea.Underground,
-                new MineshaftSpawnChance(new RegistryKey("bug"), 10, 30, -1, RandomBugPredicate));
+                new MineshaftSpawnChance(new ResourceKey("bug"), 10, 30, -1, RandomBugPredicate));
             Register(MonsterLocomotion.Ground, MineshaftArea.Underground,
-                new MineshaftSpawnChance(new RegistryKey("duggy"), 10, 30, 1, DuggyPredicate));
+                new MineshaftSpawnChance(new ResourceKey("duggy"), 10, 30, 1, DuggyPredicate));
             Register(MonsterLocomotion.Ground, MineshaftArea.Underground,
-                new MineshaftSpawnChance(new RegistryKey("rock_crab"), 10, 30, 2, RockCrabPredicate));
+                new MineshaftSpawnChance(new ResourceKey("rock_crab"), 10, 30, 2, RockCrabPredicate));
             Register(MonsterLocomotion.Ground, MineshaftArea.Underground,
-                new MineshaftSpawnChance(new RegistryKey("green_slime"), 10, 14, 999));
+                new MineshaftSpawnChance(new ResourceKey("green_slime"), 10, 14, 999));
             Register(MonsterLocomotion.Ground, MineshaftArea.Underground,
-                new MineshaftSpawnChance(new RegistryKey("fly"), 15, 30, 3, FlyPredicate));
+                new MineshaftSpawnChance(new ResourceKey("fly"), 15, 30, 3, FlyPredicate));
             Register(MonsterLocomotion.Ground, MineshaftArea.Underground,
-                new MineshaftSpawnChance(new RegistryKey("green_slime"), 15, 30, 4, GreenSlimePredicate));
-            Register(MonsterLocomotion.Ground, MineshaftArea.Underground, new MineshaftSpawnChance(new RegistryKey("grub"), 15, 30, 999));
+                new MineshaftSpawnChance(new ResourceKey("green_slime"), 15, 30, 4, GreenSlimePredicate));
+            Register(MonsterLocomotion.Ground, MineshaftArea.Underground, new MineshaftSpawnChance(new ResourceKey("grub"), 15, 30, 999));
 
             // Floors 30 - 40 - Shadow
             Register(MonsterLocomotion.Ground, MineshaftArea.Underground,
-                new MineshaftSpawnChance(new RegistryKey("bat"), 30, 40, 1, BatPredicate));
+                new MineshaftSpawnChance(new ResourceKey("bat"), 30, 40, 1, BatPredicate));
             Register(MonsterLocomotion.Ground, MineshaftArea.Underground, 
-                new MineshaftSpawnChance(new RegistryKey("rock_golem"), 30, 40, 2));
+                new MineshaftSpawnChance(new ResourceKey("rock_golem"), 30, 40, 2));
             GemfruitMod.InitBus.FireEvent(new MineshaftSpawnRegistrationEvent(this, EventPhase.During, MonsterLocomotion.Ground, MineshaftArea.Underground));
             GemfruitMod.InitBus.FireEvent(new MineshaftSpawnRegistrationEvent(this, EventPhase.After, MonsterLocomotion.Ground, MineshaftArea.Underground));
             
             GemfruitMod.InitBus.FireEvent(new MineshaftSpawnRegistrationEvent(this, EventPhase.Before, MonsterLocomotion.Flying, MineshaftArea.Underground));
             Register(MonsterLocomotion.Flying, MineshaftArea.Underground,
-                new MineshaftSpawnChance(new RegistryKey("flying_fly"), 10, 40, 999));
+                new MineshaftSpawnChance(new ResourceKey("flying_fly"), 10, 40, 999));
             GemfruitMod.InitBus.FireEvent(new MineshaftSpawnRegistrationEvent(this, EventPhase.During, MonsterLocomotion.Flying, MineshaftArea.Underground));
             GemfruitMod.InitBus.FireEvent(new MineshaftSpawnRegistrationEvent(this, EventPhase.After, MonsterLocomotion.Flying, MineshaftArea.Underground));
             
             // Floors 40 - 80 - Ice
             GemfruitMod.InitBus.FireEvent(new MineshaftSpawnRegistrationEvent(this, EventPhase.Before, MonsterLocomotion.Ground, MineshaftArea.Ice));
             Register(MonsterLocomotion.Ground, MineshaftArea.Ice,
-                new MineshaftSpawnChance(new RegistryKey("skeleton"), 70, 80, 1, SkeletonPredicate));
+                new MineshaftSpawnChance(new ResourceKey("skeleton"), 70, 80, 1, SkeletonPredicate));
             Register(MonsterLocomotion.Ground, MineshaftArea.Ice,
-                new MineshaftSpawnChance(new RegistryKey("dust_spirit"), 40, 80, 2, DustSpiritPredicate));
+                new MineshaftSpawnChance(new ResourceKey("dust_spirit"), 40, 80, 2, DustSpiritPredicate));
             Register(MonsterLocomotion.Ground, MineshaftArea.Ice,
-                new MineshaftSpawnChance(new RegistryKey("bat"), 40, 80, 3, FrostBatPredicate));
+                new MineshaftSpawnChance(new ResourceKey("bat"), 40, 80, 3, FrostBatPredicate));
             Register(MonsterLocomotion.Ground, MineshaftArea.Ice,
-                new MineshaftSpawnChance(new RegistryKey("ghost"), 50, 80, 4, GhostPredicate));
+                new MineshaftSpawnChance(new ResourceKey("ghost"), 50, 80, 4, GhostPredicate));
             Register(MonsterLocomotion.Ground, MineshaftArea.Ice,
-                new MineshaftSpawnChance(new RegistryKey("green_slime"), 40, 80, 999));
+                new MineshaftSpawnChance(new ResourceKey("green_slime"), 40, 80, 999));
             GemfruitMod.InitBus.FireEvent(new MineshaftSpawnRegistrationEvent(this, EventPhase.During, MonsterLocomotion.Ground, MineshaftArea.Ice));
             GemfruitMod.InitBus.FireEvent(new MineshaftSpawnRegistrationEvent(this, EventPhase.After, MonsterLocomotion.Ground, MineshaftArea.Ice));
 
             // Floors 80 - 120 - Lava
             GemfruitMod.InitBus.FireEvent(new MineshaftSpawnRegistrationEvent(this, EventPhase.Before, MonsterLocomotion.Ground, MineshaftArea.Lava));
             Register(MonsterLocomotion.Ground, MineshaftArea.Lava,
-                new MineshaftSpawnChance(new RegistryKey("bat"), 80, 120, 1, LavaBatPredicate));
+                new MineshaftSpawnChance(new ResourceKey("bat"), 80, 120, 1, LavaBatPredicate));
             Register(MonsterLocomotion.Ground, MineshaftArea.Lava,
-                new MineshaftSpawnChance(new RegistryKey("green_slime"), 80, 120, 2, RedSlimePredicate));
+                new MineshaftSpawnChance(new ResourceKey("green_slime"), 80, 120, 2, RedSlimePredicate));
             Register(MonsterLocomotion.Ground, MineshaftArea.Lava,
-                new MineshaftSpawnChance(new RegistryKey("metal_head"), 80, 120, 3, MetalHeadPredicate));
+                new MineshaftSpawnChance(new ResourceKey("metal_head"), 80, 120, 3, MetalHeadPredicate));
             Register(MonsterLocomotion.Ground, MineshaftArea.Lava,
-                new MineshaftSpawnChance(new RegistryKey("shadow_brute"), 80, 120, 4, ShadowBrutePredicate));
+                new MineshaftSpawnChance(new ResourceKey("shadow_brute"), 80, 120, 4, ShadowBrutePredicate));
             Register(MonsterLocomotion.Ground, MineshaftArea.Lava,
-                new MineshaftSpawnChance(new RegistryKey("shadow_shaman"), 80, 120, 5, ShadowShamanPredicate));
+                new MineshaftSpawnChance(new ResourceKey("shadow_shaman"), 80, 120, 5, ShadowShamanPredicate));
             Register(MonsterLocomotion.Ground, MineshaftArea.Lava,
-                new MineshaftSpawnChance(new RegistryKey("lava_crab"), 80, 120, 6, LavaCrabPredicate));
+                new MineshaftSpawnChance(new ResourceKey("lava_crab"), 80, 120, 6, LavaCrabPredicate));
             Register(MonsterLocomotion.Ground, MineshaftArea.Lava,
-                new MineshaftSpawnChance(new RegistryKey("squid_kid"), 90, 120, 7, SquidKidPredicate));
+                new MineshaftSpawnChance(new ResourceKey("squid_kid"), 90, 120, 7, SquidKidPredicate));
             Register(MonsterLocomotion.Ground, MineshaftArea.Lava,
-                new MineshaftSpawnChance(new RegistryKey("green_slime"), 80, 120, 999));
+                new MineshaftSpawnChance(new ResourceKey("green_slime"), 80, 120, 999));
             GemfruitMod.InitBus.FireEvent(new MineshaftSpawnRegistrationEvent(this, EventPhase.During, MonsterLocomotion.Ground, MineshaftArea.Lava));
             GemfruitMod.InitBus.FireEvent(new MineshaftSpawnRegistrationEvent(this, EventPhase.After, MonsterLocomotion.Ground, MineshaftArea.Lava));
         }

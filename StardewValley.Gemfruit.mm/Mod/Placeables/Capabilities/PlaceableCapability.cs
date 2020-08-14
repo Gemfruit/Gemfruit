@@ -1,4 +1,4 @@
-namespace Gemfruit.Mod.Placeables
+namespace Gemfruit.Mod.Placeables.Capabilities
 {
     public abstract class PlaceableCapability
     {

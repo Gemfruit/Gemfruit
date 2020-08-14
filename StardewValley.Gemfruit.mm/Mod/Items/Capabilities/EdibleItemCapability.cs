@@ -1,4 +1,4 @@
-namespace Gemfruit.Mod.Items
+namespace Gemfruit.Mod.Items.Capabilities
 {
     public class EdibleItemCapability : ItemCapability
     {

@@ -1,8 +1,6 @@
 using System;
 using Gemfruit.Mod;
 using Gemfruit.Mod.Internal;
-using Microsoft.Xna.Framework.Graphics;
-using MonoMod;
 
 #pragma warning disable 108,114,626,649
 // ReSharper disable InconsistentNaming
@@ -31,9 +29,6 @@ namespace StardewValley
                 GemfruitMod.LoadMods();
                 GemfruitMod.LoadInitHooks();
                 GemfruitMod.ResourceRegistry.Initialize();
-                GemfruitMod.MonsterRegistry.Initialize();
-                GemfruitMod.MineshaftSpawnRegistry.Initialize();
-                GemfruitMod.WildernessSpawnRegistry.Initialize();
                 GemfruitMod.LoadGameHooks();
             }
             catch (Exception e)
@@ -52,6 +47,9 @@ namespace StardewValley
         {
             GemfruitMod.Logger.Log(LogLevel.INFO, "Game1", "Loading mod assets...");
             GemfruitMod.LoadAssets();
+            GemfruitMod.MonsterRegistry.Initialize();
+            GemfruitMod.MineshaftSpawnRegistry.Initialize();
+            GemfruitMod.WildernessSpawnRegistry.Initialize();
             GemfruitMod.PlaceableRegistry.Initialize();
             GemfruitMod.ItemRegistry.Initialize();
             orig_LoadContent();

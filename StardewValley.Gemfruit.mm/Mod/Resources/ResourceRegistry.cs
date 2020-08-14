@@ -12,15 +12,15 @@ namespace Gemfruit.Mod.Resources
 {
     public class ResourceRegistry
     {
-        private readonly Dictionary<RegistryKey, object> _dictionary =
-            new Dictionary<RegistryKey, object>();
+        private readonly Dictionary<ResourceKey, object> _dictionary =
+            new Dictionary<ResourceKey, object>();
 
         public void Initialize()
         {
             
         }
         
-        public Optional<T> Get<T>(RegistryKey key)
+        public Optional<T> Get<T>(ResourceKey key)
         {
             //GemfruitMod.Logger.Log(LogLevel.DEBUG, "ResourceRegistry", $"Trying to fetch {key}");
             if (!_dictionary.ContainsKey(key))
@@ -54,7 +54,7 @@ namespace Gemfruit.Mod.Resources
                 var fs = new FileStream(f, FileMode.Open);
                 if (typeof(T) == typeof(Texture2D))
                 {
-                    Register(new RegistryKey(namspac, tree + "\\" + name),
+                    Register(new ResourceKey(namspac, tree + "\\" + name),
                         Texture2D.FromStream(Game1.graphics.GraphicsDevice, fs));
                     GemfruitMod.Logger.Log(LogLevel.DEBUG, "ResourceRegistry", $"Loaded texture {tree}\\{name}");
                 }
@@ -62,7 +62,7 @@ namespace Gemfruit.Mod.Resources
             }
         }
 
-        public void Register<T>(RegistryKey key, T asset)
+        public void Register<T>(ResourceKey key, T asset)
         {
             GemfruitMod.Logger.Log(LogLevel.DEBUG, GetType().Name,
                 $"Registering resource '{key}");

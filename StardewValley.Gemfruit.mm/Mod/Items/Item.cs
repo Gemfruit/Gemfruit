@@ -4,15 +4,18 @@ using System.Linq;
 using Gemfruit.Mod.API;
 using Gemfruit.Mod.API.Utility;
 using Gemfruit.Mod.Internal;
+using Gemfruit.Mod.Items.Capabilities;
+using Gemfruit.Mod.Placeables;
+using Gemfruit.Mod.Placeables.Capabilities;
 using Microsoft.Xna.Framework;
 
 namespace Gemfruit.Mod.Items
 {
     public class Item
     {
-        public RegistryKey Key { get; protected set; }
+        public ResourceKey Key { get; set; }
         
-        public RegistryKey SpriteSheet { get; protected set; }
+        public ResourceKey SpriteSheet { get; protected set; }
         
         public Rectangle Rect { get; protected set; }
         
@@ -22,32 +25,124 @@ namespace Gemfruit.Mod.Items
         public int Category { get; protected set; }
         public string DisplayName { get; protected set; }
         public string Description { get; protected set; }
-        public List<ItemCapability> Capabilities { get; protected set; }
-        
-        public virtual int StackSize => 999;
+        public int MaxStackSize { get; protected set; }
 
-        protected Item()
+        public List<ItemCapability> Capabilities { get; protected set; }
+
+
+        public Item()
         {
-            
+            Capabilities = new List<ItemCapability>();
         }
         
-        protected Item(Item bas)
+
+        public Item(Placeable p)
         {
-            Key = bas.Key;
-            Name = bas.Name;
-            Price = bas.Price;
-            Type = bas.Type;
-            Category = bas.Category;
-            DisplayName = bas.DisplayName;
-            Description = bas.Description;
+            Key = p.Key;
+            Name = p.Name;
+            Price = p.Price;
+            // TODO: This is probably an improper place to be doing this.
+            if (p.Capabilities.Exists(m => m is FurniturePlaceableCapability))
+            {
+                Type = "Decor";
+                Category = -24;
+            }
+            else if(p.Capabilities.Exists(m => m is CraftingPlaceableCapability))
+            {
+                Type = "Crafting";
+                Category = -9;
+            }
+            else
+            {
+                Type = "INVALID";
+                Category = -999;
+            }
+            DisplayName = p.DisplayName;
+            Description = p.Description;
+            MaxStackSize = 1;
+            Capabilities = new List<ItemCapability> {new PlaceableItemCapability(p.Key)};
+            AssignSpriteSheetReference(p.SpriteSheet, p.Rect);
+        }
+        
+        internal static Result<Item, Exception> ParseWeaponFromString(string line)
+        {
+            var i = new Item();
+            var parts = line.Split('/');
+
+            try
+            {
+                // index 0 - Name
+                i.Name = parts[0];
+
+                // index 1 - description
+                i.Description = parts[1];
+
+                // index 2 - minimum damage
+                var minimumDamage = int.Parse(parts[2]);
+
+                // index 3 - maximum damage
+                var maximumDamage = int.Parse(parts[3]);
+
+                // index 4 - knockback
+                var knockback = float.Parse(parts[4]);
+
+                // index 5 - speed
+                var speed = int.Parse(parts[5]);
+
+                // index 6 - precision
+                var precision = int.Parse(parts[6]);
+
+                // index 7 - defense
+                var defense = int.Parse(parts[7]);
+
+                // index 8 - weapon type
+                var weaponType = (WeaponType) int.Parse(parts[8]);
+
+                // index 9 - base level
+                var baseLevel = int.Parse(parts[9]);
+
+                // index 10 - minimum level
+                var minimumLevel = int.Parse(parts[10]);
+
+                // index 11 - area of effect
+                var areaOfEffect = int.Parse(parts[11]);
+
+                // index 12 - crit chance
+                var critChance = float.Parse(parts[12]);
+
+                // index 13 - crit multiplier
+                var critMultiplier = float.Parse(parts[13]);
+                
+                var weapondef = new WeaponizableCapability(minimumDamage, maximumDamage, knockback, 
+                    speed, precision, defense, weaponType, baseLevel,
+                    minimumLevel, areaOfEffect, critChance, critMultiplier);
+                
+                i.Capabilities.Add(weapondef);
+
+
+                // TODO: Better localization system.
+                i.DisplayName = parts.Length > 14 ? parts[14] : i.Name;
+                
+                // calculate this once, rather than continually
+                i.Price = weapondef.ItemLevel * 100;
+                
+                // hardcoded defaults
+                i.Type = "Weapon";
+                i.Category = -98;
+                i.MaxStackSize = 1;
+            }
+            catch (Exception e)
+            {
+                return Result<Item, Exception>.FromException(e);
+            }
+
+            return Result<Item, Exception>.FromValue(i);
         }
 
         internal static Result<Item, Exception> ParseFromString(string line)
         {
             var i = new Item();
             var parts = line.Split('/');
-            i.Capabilities = new List<ItemCapability>();
-
             try
             {
                 // index 0 - Name
@@ -90,7 +185,7 @@ namespace Gemfruit.Mod.Items
                 // TODO: This is fairly fragile. Possibly change this?
                 if (i.Name.Contains("Geode"))
                 {
-                    i = new GeodeItem(i, parts[6].Split().Select(int.Parse).ToList());
+                    i.Capabilities.Add(new GeodizableItemCapability(parts[6].Split().Select(int.Parse).ToList()));
                 }
             }
             catch (Exception e)
@@ -101,7 +196,7 @@ namespace Gemfruit.Mod.Items
             return Result<Item, Exception>.FromValue(i);
         }
 
-        public void AssignSpriteSheetReference(RegistryKey sheet, Rectangle pos)
+        public void AssignSpriteSheetReference(ResourceKey sheet, Rectangle pos)
         {
             SpriteSheet = sheet;
             Rect = pos;

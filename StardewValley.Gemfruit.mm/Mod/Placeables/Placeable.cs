@@ -2,32 +2,96 @@ using System;
 using System.Collections.Generic;
 using Gemfruit.Mod.API;
 using Gemfruit.Mod.API.Utility;
+using Gemfruit.Mod.Internal;
 using Gemfruit.Mod.Items;
+using Gemfruit.Mod.Placeables.Capabilities;
 using Microsoft.Xna.Framework;
 
 namespace Gemfruit.Mod.Placeables
 {
     public class Placeable
     {
-        public RegistryKey Key { get; }
-        public RegistryKey SpriteSheet { get; protected set; }
+        public ResourceKey Key { get; set; }
+        public ResourceKey SpriteSheet { get; protected set; }
         public string Name { get; protected set; }
         public string Description { get; protected set; }
         public Rectangle Rect { get; protected set; }
-        public int Price { get; protected set; } 
+        public int Price { get; protected set; }
+        
+        // TODO: Overhaul this entire thing.
         public string DisplayName { get; protected set; }
+        
         public Point Bounds { get; protected set; }
         public int Rotations { get; protected set; }
         
         public List<PlaceableCapability> Capabilities { get; protected set; }
 
+        public Placeable()
+        {
+            Capabilities = new List<PlaceableCapability>();
+        }
+        
+        internal static Result<Placeable, Exception> ParseFromBigCraftableString(string line)
+        {
+            var i = new Placeable();
+            var parts = line.Split('/');
+
+            try
+            {
+                // index 0 - Name
+                i.Name = parts[0];
+                
+                // index 1 - Price
+                i.Price = int.Parse(parts[1]);
+                
+                // index 2 - Edibility
+                // We ignore this (for now) because there's not really any usage of it in the vanilla files.
+                
+                // index 3 - Type & Category
+                // We also ignore this, as they're all set to "Crafting -9"
+                
+                // index 4 - Description
+                i.Description = parts[4];
+                
+                // index 5 - SetOutdoors
+                var so = BoolUtility.Parse(parts[5]);
+                
+                // index 6 - SetIndoors
+                var si = BoolUtility.Parse(parts[6]);
+
+                // index 7 - Fragility
+                var frag = int.Parse(parts[7]);
+                
+                var il = false;
+
+                if (parts.Length >= 10)
+                {
+                    il = BoolUtility.Parse(parts[8]);
+                    i.DisplayName = parts[9];
+                }
+                else
+                {
+                    i.DisplayName = parts[8];
+                }
+                
+                var cap = new CraftingPlaceableCapability(so, si, frag, il);
+                i.Capabilities.Add(cap);
+                
+                i.Bounds = new Point(64, 64);
+                i.Rect = new Rectangle(Point.Zero, new Point(16, 32));
+            }
+            catch (Exception e)
+            {
+                return Result<Placeable, Exception>.FromException(e);
+            }
+
+            return Result<Placeable, Exception>.FromValue(i);
+        }
         
         internal static Result<Placeable, Exception> ParseFromFurnitureString(string line, string desc)
         {
             var i = new Placeable();
             var parts = line.Split('/');
-
-            i.Capabilities = new List<PlaceableCapability>();
             
             try
             {
@@ -80,15 +144,15 @@ namespace Gemfruit.Mod.Placeables
             return Result<Placeable, Exception>.FromValue(i);
         }
         
-        public void AssignSpriteSheetReference(RegistryKey sheet, Rectangle pos)
+        public void AssignSpriteSheetReference(ResourceKey sheet, Rectangle pos)
         {
             SpriteSheet = sheet;
             Rect = pos;
         }
 
-        public virtual PlaceableItem GetPlaceableItem()
+        public virtual Item GetPlaceableItem()
         {
-            return new PlaceableItem(this);
+            return new Item(this);
         }
     }
 }

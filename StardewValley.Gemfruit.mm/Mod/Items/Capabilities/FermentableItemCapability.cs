@@ -1,12 +1,12 @@
 using Gemfruit.Mod.API;
 
-namespace Gemfruit.Mod.Items
+namespace Gemfruit.Mod.Items.Capabilities
 {
     public class FermentableItemCapability : ItemCapability
     {
-        public RegistryKey FermentedItem { get; }
+        public ResourceKey FermentedItem { get; }
 
-        public FermentableItemCapability(RegistryKey fermentedItem)
+        public FermentableItemCapability(ResourceKey fermentedItem)
         {
             FermentedItem = fermentedItem;
         }

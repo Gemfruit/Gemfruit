@@ -17,9 +17,9 @@ namespace StardewValley.Menus
 {
     internal class patch_TitleMenu : TitleMenu
     {
-        float scale = 1.0f;
-        bool rev;
-        const float margin = 0.25f;
+        private float scale = 1.0f;
+        private bool rev;
+        private const float margin = 0.25f;
         private const float increment = margin / 60.0f;
         protected extern void orig_draw(SpriteBatch b);
 

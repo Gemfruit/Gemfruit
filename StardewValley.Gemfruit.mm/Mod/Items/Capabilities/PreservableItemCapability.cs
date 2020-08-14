@@ -1,12 +1,12 @@
 using Gemfruit.Mod.API;
 
-namespace Gemfruit.Mod.Items
+namespace Gemfruit.Mod.Items.Capabilities
 {
     public class PreservableItemCapability : ItemCapability
     {
-        public RegistryKey PreserveItem { get; }
+        public ResourceKey PreserveItem { get; }
 
-        public PreservableItemCapability(RegistryKey preserveItem)
+        public PreservableItemCapability(ResourceKey preserveItem)
         {
             PreserveItem = preserveItem;
         }

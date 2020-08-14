@@ -30,7 +30,7 @@ namespace StardewValley
         public extern T orig_Load<T>(string assetName, LanguageCode language);
         public override T Load<T>(string assetName, LanguageCode language)
         {
-            var option = GemfruitMod.ResourceRegistry.Get<T>(new RegistryKey("stardew_valley", assetName));
+            var option = GemfruitMod.ResourceRegistry.Get<T>(new ResourceKey("stardew_valley", assetName));
             T res = option.IsPresent() ? option.Unwrap() : orig_Load<T>(assetName, language);
             return res;
         }

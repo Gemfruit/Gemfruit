@@ -1,12 +1,12 @@
 using Gemfruit.Mod.API;
 
-namespace Gemfruit.Mod.Items
+namespace Gemfruit.Mod.Items.Capabilities
 {
     public class SeedableItemCapability : ItemCapability
     {
-        public RegistryKey SeedItem { get; }
+        public ResourceKey SeedItem { get; }
 
-        public SeedableItemCapability(RegistryKey seedItem)
+        public SeedableItemCapability(ResourceKey seedItem)
         {
             SeedItem = seedItem;
         }

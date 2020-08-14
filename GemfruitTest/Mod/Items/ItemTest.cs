@@ -1,4 +1,5 @@
 using Gemfruit.Mod.Items;
+using Gemfruit.Mod.Items.Capabilities;
 using NUnit.Framework;
 
 namespace GemfruitTest.Mod.Items

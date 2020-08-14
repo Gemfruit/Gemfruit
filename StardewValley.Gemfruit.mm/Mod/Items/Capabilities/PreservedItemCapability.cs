@@ -1,4 +1,6 @@
-namespace Gemfruit.Mod.Items
+using Gemfruit.Mod.Items.Container;
+
+namespace Gemfruit.Mod.Items.Capabilities
 {
     public class PreservedItemCapability : ItemCapability
     {

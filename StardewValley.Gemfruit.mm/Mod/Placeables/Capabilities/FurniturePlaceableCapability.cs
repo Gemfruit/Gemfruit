@@ -1,6 +1,6 @@
 using Gemfruit.Mod.Items;
 
-namespace Gemfruit.Mod.Placeables
+namespace Gemfruit.Mod.Placeables.Capabilities
 {
     public class FurniturePlaceableCapability : PlaceableCapability
     {
