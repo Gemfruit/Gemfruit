@@ -106,6 +106,7 @@
     <Compile Include="Mod\Internal\Exceptions\RegistryConflictException.cs" />
     <Compile Include="Mod\Internal\HookLoader.cs" />
     <Compile Include="Mod\Internal\StringUtility.cs" />
+    <Compile Include="Mod\Items\Capabilities\CrystalariumizableItemCapability.cs" />
     <Compile Include="Mod\Items\Capabilities\EdibleItemCapability.cs" />
     <Compile Include="Mod\Items\Capabilities\FermentableItemCapability.cs" />
     <Compile Include="Mod\Items\Capabilities\GeodizableItemCapability.cs" />

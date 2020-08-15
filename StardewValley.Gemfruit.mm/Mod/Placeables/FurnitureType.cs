@@ -24,7 +24,10 @@ namespace Gemfruit.Mod.Items
 
     public static class FurnitureTypeExt
     {
-
+        public static readonly string[] Names = Enum.GetNames(typeof(FurnitureType));
+        public static readonly int[] Values = (int[])Enum.GetValues(typeof(FurnitureType));
+        public static readonly int Count = Names.Length;
+        
         public static FurnitureType FromString(string str)
         {
             switch (str)

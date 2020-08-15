@@ -23,7 +23,7 @@ namespace Gemfruit.Mod.Monsters
             }
             else
             {
-                GemfruitMod.Logger.Log(LogLevel.ERROR, "MineshaftSpawnRegistry",
+                GemfruitMod.Logger.Log(LogLevel.Error, "MineshaftSpawnRegistry",
                     $"Attempted to get spawn for area '{area}' before registration was done!");
             }
 

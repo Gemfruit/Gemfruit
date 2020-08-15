@@ -65,12 +65,12 @@ namespace StardewValley.Locations
                 if (monsterConstructor.IsPresent())
                 {
                     return monsterConstructor.Unwrap()
-                        .getMineshaftConstructor()(new MineshaftSpawnData(this, mineRandom, position, getMineArea(), level));
+                        .GetMineshaftConstructor()(new MineshaftSpawnData(this, mineRandom, position, getMineArea(), level));
                 }
-                Console.Error.WriteLine($"Tried to spawn '{spawnedEntity.Unwrap()}', but was unable to find a registered constructor!");
+                GemfruitMod.Logger.Log(LogLevel.Error, GetType().Name, $"Tried to spawn '{spawnedEntity.Unwrap()}', but was unable to find a registered constructor!");
             }
 
-            Console.Error.WriteLine($"Exhausted spawn pool for area '{currentArea}' - defaulting to caution slime!!!");
+            GemfruitMod.Logger.Log(LogLevel.Warning, GetType().Name, $"Exhausted spawn pool for area '{currentArea}' - defaulting to caution slime!!!");
             return new GreenSlime(position, Color.Red);
         }
         
@@ -80,7 +80,7 @@ namespace StardewValley.Locations
     {
         public static void setGhostAdded(this MineShaft self, bool ghostAdded)
         {
-            GemfruitMod.Logger.Log(LogLevel.DEBUG, "MineShaftExt", $"GhostAdded set to {ghostAdded}");
+            GemfruitMod.Logger.Log(LogLevel.Debug, "MineShaftExt", $"GhostAdded set to {ghostAdded}");
             ((patch_MineShaft) self).ghostAdded = ghostAdded;
         }
 

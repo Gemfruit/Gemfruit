@@ -21,7 +21,17 @@ namespace Gemfruit.Mod
         public const string GemfruitVersion = "0.1.0";
         
         internal static readonly Logger Logger = new Logger();
+        /// <summary>
+        /// The Initialization Bus is an <see cref="EventBus"/> used to dispatch
+        /// events that relate to the initialization of Gemfruit and mods. This
+        /// includes any event where an object is generated before gameplay.
+        /// </summary>
         internal static readonly EventBus InitBus = new EventBus();
+        
+        /// <summary>
+        /// The Game Bus is an <see cref="EventBus"/> used to dispatch
+        /// events that relate to gameplay.
+        /// </summary>
         internal static readonly EventBus GameBus = new EventBus();
 
         public static ResourceRegistry ResourceRegistry { get; private set; }
@@ -37,7 +47,7 @@ namespace Gemfruit.Mod
         public static void Initialize(Game1 game)
         {
             #if DEBUG
-                Logger.MaskLevel = LogLevel.TRACE;
+                Logger.MaskLevel = LogLevel.Trace;
             #else
                 Logger.MaskLevel = LogLevel.INFO;
             #endif
@@ -57,19 +67,19 @@ namespace Gemfruit.Mod
 
             foreach (var f in modFolders)
             {
-                Logger.Log(LogLevel.DEBUG, "GemfruitMod", $"Looking in '{f}");
+                Logger.Log(LogLevel.Debug, "GemfruitMod", $"Looking in '{f}");
                 var assemblies = Directory.GetFiles(f).Where(s => s.ToLower().EndsWith(".dll"));
                 var subfolders = Directory.GetDirectories(f);
 
                 foreach (var a in assemblies)
                 {
-                    Logger.Log(LogLevel.DEBUG, "GemfruitMod", $"Found an assembly '{a}'");
+                    Logger.Log(LogLevel.Debug, "GemfruitMod", $"Found an assembly '{a}'");
                     var assembly = Assembly.LoadFrom(a);
                     var validClasses = assembly.GetTypes().Where((t, _) => t.GetCustomAttribute<Module>() != null)
                         .ToList();
                     if (!validClasses.Any())
                     {
-                        Logger.Log(LogLevel.DEBUG, "GemfruitMod", "No mods found in assembly - continuing");
+                        Logger.Log(LogLevel.Debug, "GemfruitMod", "No mods found in assembly - continuing");
                         continue;
                     }
 
@@ -77,7 +87,7 @@ namespace Gemfruit.Mod
                     {
                         var mod = c.GetCustomAttribute<Module>();
                         _modList.Add(mod.Id, c);
-                        Logger.Log(LogLevel.DEBUG, "GemfruitMod", $"Adding a mod named '{mod.Id}' with class '{c.FullName}'");
+                        Logger.Log(LogLevel.Debug, "GemfruitMod", $"Adding a mod named '{mod.Id}' with class '{c.FullName}'");
                     }
                 }
                 
@@ -85,11 +95,11 @@ namespace Gemfruit.Mod
                 {
                     if (!sf.EndsWith("assets")) continue;
                     _modAssetPaths.Add(sf);
-                    Logger.Log(LogLevel.DEBUG, "GemfruitMod", $"Adding an asset path '{sf}'");
+                    Logger.Log(LogLevel.Debug, "GemfruitMod", $"Adding an asset path '{sf}'");
                 }
             }
 
-            Logger.Log(LogLevel.INFO, "GemfruitMod", $"Loaded {_modList.Count} mods");
+            Logger.Log(LogLevel.Info, "GemfruitMod", $"Loaded {_modList.Count} mods");
         }
 
         public static void LoadAssets()
@@ -99,22 +109,22 @@ namespace Gemfruit.Mod
                 var namespaces = Directory.GetDirectories(f);
                 foreach (var n in namespaces)
                 {
-                    var namspac = n.Replace(f + Path.DirectorySeparatorChar, "");
+                    var ns = n.Replace(f + Path.DirectorySeparatorChar, "");
                     var components = Directory.GetDirectories(n);
-                    Logger.Log(LogLevel.DEBUG, "GemfruitMod", $"Found namespace '{namspac}'");
+                    Logger.Log(LogLevel.Debug, "GemfruitMod", $"Found namespace '{ns}'");
                     foreach (var c in components)
                     {
                         var component = c.Replace(n + Path.DirectorySeparatorChar, "");
-                        Logger.Log(LogLevel.DEBUG, "GemfruitMod", $"Found component '{component}'");
+                        Logger.Log(LogLevel.Debug, "GemfruitMod", $"Found component '{component}'");
                         switch (component)
                         {
                             case "textures":
                             {
-                                ResourceRegistry.LoadFromDirectory<Texture2D>(namspac, c, c);
+                                ResourceRegistry.LoadFromDirectory<Texture2D>(ns, c, c);
                                 var subs = Directory.GetDirectories(c);
                                 foreach (var s in subs)
                                 {
-                                    ResourceRegistry.LoadFromDirectory<Texture2D>(namspac, c, s);
+                                    ResourceRegistry.LoadFromDirectory<Texture2D>(ns, c, s);
                                 }
 
                                 break;
@@ -125,7 +135,10 @@ namespace Gemfruit.Mod
             }
         }
 
-        public static void LoadInitHooks()
+        public static void LoadGameHooks() => LoadBusHook(GameBus, "GameBus");
+        public static void LoadInitHooks() => LoadBusHook(InitBus, "InitBus");
+
+        private static void LoadBusHook(EventBus bus, string name)
         {
             foreach (var mod in _modList)
             {
@@ -134,20 +147,20 @@ namespace Gemfruit.Mod
                 {
                     var attribute = m.GetCustomAttribute<InitBusHookAttribute>();
                     if (attribute == null) continue;
-                    Logger.Log(LogLevel.DEBUG, "GemfruitMod", $"Found an InitBus hook for mod '{mod.Key}' - '{mod.Value.Name}#{m.Name}");
+                    Logger.Log(LogLevel.Debug, "GemfruitMod", $"Found a(n) {name} hook for mod '{mod.Key}' - '{mod.Value.Name}#{m.Name}");
                     var paramList = m.GetParameters();
                     if (paramList.Length != 1)
                     {
-                        Logger.Log(LogLevel.ERROR, "GemfruitMod",
-                            $"Unable to load InitBus hook for '{mod.Value.Name}#{m.Name}' - wrong number of parameters ({paramList.Length})");
+                        Logger.Log(LogLevel.Error, "GemfruitMod",
+                            $"Unable to load {name} hook for '{mod.Value.Name}#{m.Name}' - wrong number of parameters ({paramList.Length})");
                         continue;
                     }
 
                     var firstParam = paramList[0].ParameterType;
                     if (!firstParam.IsSubclassOf(typeof(EventBase)))
                     {
-                        Logger.Log(LogLevel.ERROR, "GemfruitMod",
-                            $"Unable to load InitBus hook for '{mod.Value.Name}#{m.Name} - parameter isn't EventBase!");
+                        Logger.Log(LogLevel.Error, "GemfruitMod",
+                            $"Unable to load {name} hook for '{mod.Value.Name}#{m.Name} - parameter isn't EventBase!");
                         continue;
                     }
                     
@@ -155,46 +168,7 @@ namespace Gemfruit.Mod
                     typeof(EventBus)
                         .GetMethod("AddHandler")
                         ?.MakeGenericMethod(firstParam)
-                        .Invoke(InitBus, 
-                            new object[]
-                            {
-                                Delegate.CreateDelegate(typeof(Action<>).MakeGenericType(firstParam), m)
-                            });
-                }
-            }
-        }
-
-        public static void LoadGameHooks()
-        {
-            foreach (var mod in _modList)
-            {
-                var methods = mod.Value.GetRuntimeMethods();
-                foreach (var m in methods)
-                {
-                    var attribute = m.GetCustomAttribute<GameBusHookAttribute>();
-                    if (attribute == null) continue;
-                    Logger.Log(LogLevel.DEBUG, "GemfruitMod", $"Found an GameBus hook for mod '{mod.Key}' - '{mod.Value.Name}#{m.Name}");
-                    var paramList = m.GetParameters();
-                    if (paramList.Length != 1)
-                    {
-                        Logger.Log(LogLevel.ERROR, "GemfruitMod",
-                            $"Unable to load GameBus hook for '{mod.Value.Name}#{m.Name}' - wrong number of parameters ({paramList.Length})");
-                        continue;
-                    }
-
-                    var firstParam = paramList[0].ParameterType;
-                    if (!firstParam.IsSubclassOf(typeof(EventBase)))
-                    {
-                        Logger.Log(LogLevel.ERROR, "GemfruitMod",
-                            $"Unable to load GameBus hook for '{mod.Value.Name}#{m.Name} - parameter isn't EventBase!");
-                        continue;
-                    }
-                    
-                    // reflection hack to get our event bus to register the event with matching parameters
-                    typeof(EventBus)
-                        .GetMethod("AddHandler")
-                        ?.MakeGenericMethod(firstParam)
-                        .Invoke(GameBus, 
+                        .Invoke(bus, 
                             new object[]
                             {
                                 Delegate.CreateDelegate(typeof(Action<>).MakeGenericType(firstParam), m)

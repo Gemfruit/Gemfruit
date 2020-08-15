@@ -4,19 +4,19 @@ namespace Gemfruit.Mod.Internal
 {
     public enum LogLevel
     {
-        TRACE,
-        DEBUG,
-        INFO,
-        WARNING,
-        ERROR,
-        FATAL
+        Trace,
+        Debug,
+        Info,
+        Warning,
+        Error,
+        Fatal
     }
     
     internal class Logger
     {
         public LogLevel MaskLevel { get; set; }
 
-        public Logger(LogLevel maskLevel = LogLevel.DEBUG)
+        public Logger(LogLevel maskLevel = LogLevel.Debug)
         {
             MaskLevel = maskLevel;
         }
@@ -24,7 +24,7 @@ namespace Gemfruit.Mod.Internal
         public void Log(LogLevel level, string location, string text)
         {
             if (level <= MaskLevel) return;
-            if(level <= LogLevel.WARNING)
+            if(level <= LogLevel.Warning)
                 Console.WriteLine($"[{level}] {{{location}}} {text}");
             else
                 Console.Error.WriteLine($"[{level}] {{{location}}} {text}");

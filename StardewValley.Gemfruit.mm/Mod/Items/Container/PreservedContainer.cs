@@ -20,7 +20,7 @@ namespace Gemfruit.Mod.Items.Container
             }
             else
             {
-                GemfruitMod.Logger.Log(LogLevel.ERROR, "PreservedContainer", 
+                GemfruitMod.Logger.Log(LogLevel.Error, "PreservedContainer", 
                     "Requested deserialization of preserved container failed! Key not found!");
             }
         }

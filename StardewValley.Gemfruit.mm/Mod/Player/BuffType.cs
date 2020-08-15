@@ -1,3 +1,5 @@
+using System;
+
 namespace Gemfruit.Mod.Player
 {
     public enum BuffType
@@ -15,5 +17,12 @@ namespace Gemfruit.Mod.Player
         YobaBlessing = 21,
         AdrenalineRush = 22,
         OilOfGarlic = 23
+    }
+    
+    public static class BuffTypeExt
+    {
+        public static readonly string[] Names = Enum.GetNames(typeof(BuffType));
+        public static readonly int[] Values = (int[])Enum.GetValues(typeof(BuffType));
+        public static readonly int Count = Names.Length;
     }
 }

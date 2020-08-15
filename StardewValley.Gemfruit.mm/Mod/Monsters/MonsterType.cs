@@ -20,33 +20,33 @@ namespace Gemfruit.Mod.Monsters
             _mineshaftConstructor =
                 _ =>
                 {
-                    GemfruitMod.Logger.Log(LogLevel.ERROR, "MonsterType",
+                    GemfruitMod.Logger.Log(LogLevel.Error, "MonsterType",
                         $"Can't spawn '{name}' - no mineshaft constructor!");
                     return null;
                 };
             _wildernessConstructor =
                 _ =>
                 {
-                    GemfruitMod.Logger.Log(LogLevel.ERROR, "MonsterType",
+                    GemfruitMod.Logger.Log(LogLevel.Error, "MonsterType",
                         $"Can't spawn '{name}' - no wilderness constructor!");
                     return null;
                 };
         }
 
 
-        public MonsterType setMineshaftConstructor(MineshaftConstructor constructor)
+        public MonsterType SetMineshaftConstructor(MineshaftConstructor constructor)
         {
             _mineshaftConstructor = constructor;
             return this;
         }
 
-        public MonsterType setWildernessConstructor(WildernessConstructor constructor)
+        public MonsterType SetWildernessConstructor(WildernessConstructor constructor)
         {
             _wildernessConstructor = constructor;
             return this;
         }
 
-        public MineshaftConstructor getMineshaftConstructor()
+        public MineshaftConstructor GetMineshaftConstructor()
         {
             return _mineshaftConstructor;
         }
@@ -56,7 +56,7 @@ namespace Gemfruit.Mod.Monsters
             return _wildernessConstructor;
         }
 
-        public ResourceKey getName()
+        public ResourceKey GetName()
         {
             return name;
         }

@@ -27,8 +27,7 @@ namespace Gemfruit.Mod.Items
         public string Description { get; protected set; }
         public int MaxStackSize { get; protected set; }
 
-        public List<ItemCapability> Capabilities { get; protected set; }
-
+        public List<ItemCapability> Capabilities { get; }
 
         public Item()
         {
@@ -175,7 +174,7 @@ namespace Gemfruit.Mod.Items
                                     int.Parse(parts[8]))));
                             break;
                         default:
-                            GemfruitMod.Logger.Log(LogLevel.WARNING, "Item", "Item created from vanilla " +
+                            GemfruitMod.Logger.Log(LogLevel.Warning, "Item", "Item created from vanilla " +
                                                                              "string with edibility but no food type " +
                                                                              "specifier - ignoring edibility");
                             break;

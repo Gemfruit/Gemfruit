@@ -40,7 +40,7 @@ namespace Gemfruit.Mod.Resources
 
         public void LoadFromDirectory<T>(string namspac, string parent, string dir)
         {
-            GemfruitMod.Logger.Log(LogLevel.DEBUG, "ResourceRegistry", $"Loading from {dir}");
+            GemfruitMod.Logger.Log(LogLevel.Debug, "ResourceRegistry", $"Loading from {dir}");
             var tree = (parent == dir) ? "" : 
                 dir.Replace(parent + Path.DirectorySeparatorChar, "")
                     .Replace(Path.DirectorySeparatorChar, '\\');
@@ -48,7 +48,7 @@ namespace Gemfruit.Mod.Resources
             foreach (var f in files)
             {
                 if(File.GetAttributes(f).HasFlag(FileAttributes.Directory)) continue;
-                GemfruitMod.Logger.Log(LogLevel.DEBUG, "ResourceRegistry", $"Trying to load {f}");
+                GemfruitMod.Logger.Log(LogLevel.Debug, "ResourceRegistry", $"Trying to load {f}");
                 var name = f.Replace(dir + Path.DirectorySeparatorChar, "");
                 name = Regex.Replace(name, "(.+)\\..*", "$1");
                 var fs = new FileStream(f, FileMode.Open);
@@ -56,7 +56,7 @@ namespace Gemfruit.Mod.Resources
                 {
                     Register(new ResourceKey(namspac, tree + "\\" + name),
                         Texture2D.FromStream(Game1.graphics.GraphicsDevice, fs));
-                    GemfruitMod.Logger.Log(LogLevel.DEBUG, "ResourceRegistry", $"Loaded texture {tree}\\{name}");
+                    GemfruitMod.Logger.Log(LogLevel.Debug, "ResourceRegistry", $"Loaded texture {tree}\\{name}");
                 }
                 fs.Close();
             }
@@ -64,7 +64,7 @@ namespace Gemfruit.Mod.Resources
 
         public void Register<T>(ResourceKey key, T asset)
         {
-            GemfruitMod.Logger.Log(LogLevel.DEBUG, GetType().Name,
+            GemfruitMod.Logger.Log(LogLevel.Debug, GetType().Name,
                 $"Registering resource '{key}");
             _dictionary[key] = asset;
         }

@@ -29,13 +29,18 @@ namespace StardewValley
                 GemfruitMod.LoadMods();
                 GemfruitMod.LoadInitHooks();
                 GemfruitMod.ResourceRegistry.Initialize();
+                GemfruitMod.MonsterRegistry.Initialize();
+                GemfruitMod.MineshaftSpawnRegistry.Initialize();
+                GemfruitMod.WildernessSpawnRegistry.Initialize();
+                GemfruitMod.PlaceableRegistry.Initialize();
+                GemfruitMod.ItemRegistry.Initialize();
                 GemfruitMod.LoadGameHooks();
             }
             catch (Exception e)
             {
-                GemfruitMod.Logger.Log(LogLevel.FATAL, "Game1", "Encountered an exception while initializing GemFruit");
-                GemfruitMod.Logger.Log(LogLevel.FATAL, "Game1", e.Message);
-                GemfruitMod.Logger.Log(LogLevel.FATAL, "Game1", e.StackTrace);
+                GemfruitMod.Logger.Log(LogLevel.Fatal, "Game1", "Encountered an exception while initializing Gemfruit");
+                GemfruitMod.Logger.Log(LogLevel.Fatal, "Game1", e.Message);
+                GemfruitMod.Logger.Log(LogLevel.Fatal, "Game1", e.StackTrace);
                 Environment.Exit(-1);
             }
 
@@ -45,13 +50,19 @@ namespace StardewValley
         protected extern void orig_LoadContent();
         protected override void LoadContent()
         {
-            GemfruitMod.Logger.Log(LogLevel.INFO, "Game1", "Loading mod assets...");
-            GemfruitMod.LoadAssets();
-            GemfruitMod.MonsterRegistry.Initialize();
-            GemfruitMod.MineshaftSpawnRegistry.Initialize();
-            GemfruitMod.WildernessSpawnRegistry.Initialize();
-            GemfruitMod.PlaceableRegistry.Initialize();
-            GemfruitMod.ItemRegistry.Initialize();
+            GemfruitMod.Logger.Log(LogLevel.Info, "Game1", "Loading mod assets...");
+            try
+            {
+                GemfruitMod.LoadAssets();
+            }           
+            catch (Exception e)
+            {
+                GemfruitMod.Logger.Log(LogLevel.Fatal, "Game1", "Encountered an exception while loading Gemfruit content");
+                GemfruitMod.Logger.Log(LogLevel.Fatal, "Game1", e.Message);
+                GemfruitMod.Logger.Log(LogLevel.Fatal, "Game1", e.StackTrace);
+                Environment.Exit(-1);
+            }
+
             orig_LoadContent();
         }
     }

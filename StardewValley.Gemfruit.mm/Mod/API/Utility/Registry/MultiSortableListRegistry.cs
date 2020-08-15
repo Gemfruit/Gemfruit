@@ -28,14 +28,14 @@ namespace Gemfruit.Mod.API.Utility.Registry
         {
             if (CurrentPhase == RegistryPhase.Open)
             {
-                GemfruitMod.Logger.Log(LogLevel.DEBUG, GetType().Name,
+                GemfruitMod.Logger.Log(LogLevel.Debug, GetType().Name,
                     $"Registering value '{value}' @ '{partition}::{key}'");
                 Dictionary[partition][key].Add(value);
                 Dictionary[partition][key].Sort((x, y) => x.Priority - y.Priority);
             }
             else
             {
-                GemfruitMod.Logger.Log(LogLevel.ERROR, GetType().Name,
+                GemfruitMod.Logger.Log(LogLevel.Error, GetType().Name,
                     $"Attempted to register value '{value}' before corresponding lifecycle event!");
             }
         }

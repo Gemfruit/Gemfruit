@@ -18,17 +18,17 @@ namespace Gemfruit.Mod.Placeables
     {
         private readonly LocalizedContentManager _content;
         private readonly Dictionary<ResourceKey, Placeable> _dictionary = new Dictionary<ResourceKey, Placeable>();
-        private static readonly Dictionary<ResourceKey, Action<Placeable>> ATTACHMENT_ACTIONS = new Dictionary<ResourceKey, Action<Placeable>>();
+        private static readonly Dictionary<ResourceKey, Action<Placeable>> AttachmentActions = new Dictionary<ResourceKey, Action<Placeable>>();
         private static string _furnitureDefaultDesc;
-        
-        internal static Point FurnitureIDToLocation(int id)
+
+        private static Point FurnitureIdToLocation(int id)
         {
             var x = id % 32 * 16;
             var y = id / 32 * 16;
             return new Point(x, y);
         }
-        
-        internal static Point CraftableIDToLocation(int id)
+
+        private static Point CraftableIdToLocation(int id)
         {
             var x = id % 8 * 16;
             var y = id / 8 * 32;
@@ -48,7 +48,7 @@ namespace Gemfruit.Mod.Placeables
             GemfruitMod.InitBus.FireEvent(new PlaceableRegistrationEvent(this, EventPhase.After));
         }
 
-        internal void VanillaRegistrations()
+        private void VanillaRegistrations()
         {
             var fdict = _content.Load<Dictionary<int, string>>("Data\\Furniture");
             _furnitureDefaultDesc = _content.LoadString("Strings\\StringsFromCSFiles:Furniture.cs.12623");
@@ -57,13 +57,13 @@ namespace Gemfruit.Mod.Placeables
                 var plac = Placeable.ParseFromFurnitureString(fdict[i], _furnitureDefaultDesc);
                 if (plac.IsError())
                 {
-                    GemfruitMod.Logger.Log(LogLevel.ERROR, "PlaceableRegistry", plac.Error().Message);
+                    GemfruitMod.Logger.Log(LogLevel.Error, "PlaceableRegistry", plac.Error().Message);
                 }
                 else
                 {
                     var val = plac.Unwrap();
                     var r = val.Rect;
-                    r.Location = FurnitureIDToLocation(i);
+                    r.Location = FurnitureIdToLocation(i);
                     val.AssignSpriteSheetReference(new ResourceKey("TileSheets\\furniture"), r);
 
                     val.Key = new ResourceKey(StringUtility.SanitizeName(val.Name));
@@ -82,13 +82,13 @@ namespace Gemfruit.Mod.Placeables
                 var plac = Placeable.ParseFromBigCraftableString(cdict[i]);
                 if (plac.IsError())
                 {
-                    GemfruitMod.Logger.Log(LogLevel.ERROR, "PlaceableRegistry", plac.Error().Message);
+                    GemfruitMod.Logger.Log(LogLevel.Error, "PlaceableRegistry", plac.Error().Message);
                 }
                 else
                 {
                     var val = plac.Unwrap();
                     var r = val.Rect;
-                    r.Location = CraftableIDToLocation(i);
+                    r.Location = CraftableIdToLocation(i);
                     val.AssignSpriteSheetReference(new ResourceKey("TileSheets\\Craftables"), r);
 
                     val.Key = new ResourceKey(StringUtility.SanitizeName(val.Name));
@@ -123,18 +123,18 @@ namespace Gemfruit.Mod.Placeables
                     throw new RegistryConflictException(key);
                 }
                 
-                if (ATTACHMENT_ACTIONS.ContainsKey(key))
+                if (AttachmentActions.ContainsKey(key))
                 {
-                    ATTACHMENT_ACTIONS[key].Invoke(plac);
+                    AttachmentActions[key].Invoke(plac);
                 }
 
-                GemfruitMod.Logger.Log(LogLevel.DEBUG, GetType().Name,
+                GemfruitMod.Logger.Log(LogLevel.Debug, GetType().Name,
                     $"Registering placeable '{key}'");
                 _dictionary.Add(key, plac);
             }
             else
             {
-                GemfruitMod.Logger.Log(LogLevel.ERROR, GetType().Name,
+                GemfruitMod.Logger.Log(LogLevel.Error, GetType().Name,
                     $"Attempted to register '{key}' before corresponding lifecycle event!");
             }
         }

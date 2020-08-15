@@ -25,7 +25,7 @@ namespace Gemfruit.Mod.Monsters
             }
             else
             {
-                GemfruitMod.Logger.Log(LogLevel.ERROR, "WildernessSpawnRegistry",
+                GemfruitMod.Logger.Log(LogLevel.Error, "WildernessSpawnRegistry",
                     $"Attempted to get spawn for area '{area}' before registration was done!");
             }
 

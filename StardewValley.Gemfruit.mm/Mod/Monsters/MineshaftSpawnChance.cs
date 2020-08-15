@@ -11,13 +11,13 @@ namespace Gemfruit.Mod.Monsters
     public class MineshaftSpawnChance : IPrioritizable
     {
         public int Priority { get; }
-
         public ResourceKey Monster { get; }
         public int FirstLevel { get; }
         public int LastLevel { get; }
-        private MineLevelPredicate _spawnPredicate;
+        
+        private readonly MineLevelPredicate _spawnPredicate;
 
-        private static MineLevelPredicate _defer = (s, r, x, y) => true;
+        private static readonly MineLevelPredicate Defer = (s, r, x, y) => true;
 
         public MineshaftSpawnChance(ResourceKey monster, int firstLevel, int lastLevel, int priority,
             MineLevelPredicate spawnPredicate = null)
@@ -26,7 +26,7 @@ namespace Gemfruit.Mod.Monsters
             FirstLevel = firstLevel;
             LastLevel = lastLevel;
             Priority = priority;
-            _spawnPredicate = spawnPredicate ?? _defer;
+            _spawnPredicate = spawnPredicate ?? Defer;
         }
 
         public bool Evaluate(MineShaft shaft, Random rand, int level, int xTile, int yTile)
