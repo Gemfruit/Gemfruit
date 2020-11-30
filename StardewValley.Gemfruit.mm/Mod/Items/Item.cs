@@ -112,7 +112,7 @@ namespace Gemfruit.Mod.Items
                 // index 13 - crit multiplier
                 var critMultiplier = float.Parse(parts[13]);
                 
-                var weapondef = new WeaponizableCapability(minimumDamage, maximumDamage, knockback, 
+                var weapondef = new WeaponizableItemCapability(minimumDamage, maximumDamage, knockback, 
                     speed, precision, defense, weaponType, baseLevel,
                     minimumLevel, areaOfEffect, critChance, critMultiplier);
                 
@@ -184,7 +184,7 @@ namespace Gemfruit.Mod.Items
                 // TODO: This is fairly fragile. Possibly change this?
                 if (i.Name.Contains("Geode"))
                 {
-                    i.Capabilities.Add(new GeodizableItemCapability(parts[6].Split().Select(int.Parse).ToList()));
+                    i.Capabilities.Add(new CrackableItemCapability(parts[6].Split().Select(int.Parse).ToList()));
                 }
             }
             catch (Exception e)

@@ -40,26 +40,37 @@ namespace Gemfruit.Mod
         public static MonsterRegistry MonsterRegistry { get; private set; }
         public static MineshaftSpawnRegistry MineshaftSpawnRegistry { get; private set; }
         public static WildernessSpawnRegistry WildernessSpawnRegistry { get; private set; }
+        public static ArtifactDropRegistry ArtifactDropRegistry { get; private set; }
         
         private static Dictionary<string, Type> _modList = new Dictionary<string, Type>();
         private static List<string> _modAssetPaths = new List<string>();
 
         public static void Initialize(Game1 game)
         {
+            Console.WriteLine("We at least get here...");
             #if DEBUG
                 Logger.MaskLevel = LogLevel.Trace;
             #else
                 Logger.MaskLevel = LogLevel.INFO;
             #endif
+            Logger.Log(LogLevel.Info, "GemfruitMod", "Loading hooks...");
             HookLoader.LoadHooks();
+            Logger.Log(LogLevel.Info, "GemfruitMod", "ResourceRegistry creation");
             ResourceRegistry = new ResourceRegistry();
+            Logger.Log(LogLevel.Info, "GemfruitMod", "PlaceableRegistry creation");
             PlaceableRegistry = new PlaceableRegistry(new LocalizedContentManager(game.Content.ServiceProvider, game.Content.RootDirectory));
+            Logger.Log(LogLevel.Info, "GemfruitMod", "ItemRegistry creation");
             ItemRegistry = new ItemRegistry(new LocalizedContentManager(game.Content.ServiceProvider, game.Content.RootDirectory));
+            Logger.Log(LogLevel.Info, "GemfruitMod", "MonsterRegistry creation");
             MonsterRegistry = new MonsterRegistry();
+            Logger.Log(LogLevel.Info, "GemfruitMod", "MineshaftSpawnRegistry creation");
             MineshaftSpawnRegistry = new MineshaftSpawnRegistry();
+            Logger.Log(LogLevel.Info, "GemfruitMod", "WildernessSpawnRegistry creation");
             WildernessSpawnRegistry = new WildernessSpawnRegistry();
+            Logger.Log(LogLevel.Info, "GemfruitMod", "ArtifactDropRegistry creation");
+            ArtifactDropRegistry = new ArtifactDropRegistry();
         }
-
+    
         public static void LoadMods()
         {
             var modPath = Path.Combine(Directory.GetCurrentDirectory(), "Mods");

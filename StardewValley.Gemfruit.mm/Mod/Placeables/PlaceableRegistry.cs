@@ -57,7 +57,7 @@ namespace Gemfruit.Mod.Placeables
                 var plac = Placeable.ParseFromFurnitureString(fdict[i], _furnitureDefaultDesc);
                 if (plac.IsError())
                 {
-                    GemfruitMod.Logger.Log(LogLevel.Error, "PlaceableRegistry", plac.Error().Message);
+                    GemfruitMod.Logger.Log(LogLevel.Error, "PlaceableRegistry", plac.UnwrapError().Message);
                 }
                 else
                 {
@@ -82,7 +82,7 @@ namespace Gemfruit.Mod.Placeables
                 var plac = Placeable.ParseFromBigCraftableString(cdict[i]);
                 if (plac.IsError())
                 {
-                    GemfruitMod.Logger.Log(LogLevel.Error, "PlaceableRegistry", plac.Error().Message);
+                    GemfruitMod.Logger.Log(LogLevel.Error, "PlaceableRegistry", plac.UnwrapError().Message);
                 }
                 else
                 {

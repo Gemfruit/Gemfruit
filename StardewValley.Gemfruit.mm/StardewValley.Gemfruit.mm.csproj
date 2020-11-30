@@ -32,41 +32,41 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="MMHOOK_StardewValley, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\Assemblies\MMHOOK_StardewValley.dll</HintPath>
+    <Reference Include="Mono.Cecil, Version=0.11.3.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e">
+      <HintPath>..\..\..\..\..\Applications\Stardew Valley.app\Contents\MacOS\MonoMod\Mono.Cecil.dll</HintPath>
     </Reference>
-    <Reference Include="Mono.Cecil, Version=0.11.2.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e">
-      <HintPath>..\Assemblies\Mono.Cecil.dll</HintPath>
+    <Reference Include="Mono.Cecil.Mdb, Version=0.11.3.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e">
+      <HintPath>..\..\..\..\..\Applications\Stardew Valley.app\Contents\MacOS\MonoMod\Mono.Cecil.Mdb.dll</HintPath>
     </Reference>
-    <Reference Include="Mono.Cecil.Mdb, Version=0.11.2.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e">
-      <HintPath>..\Assemblies\Mono.Cecil.Mdb.dll</HintPath>
+    <Reference Include="Mono.Cecil.Pdb, Version=0.11.3.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e">
+      <HintPath>..\..\..\..\..\Applications\Stardew Valley.app\Contents\MacOS\MonoMod\Mono.Cecil.Pdb.dll</HintPath>
     </Reference>
-    <Reference Include="Mono.Cecil.Pdb, Version=0.11.2.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e">
-      <HintPath>..\Assemblies\Mono.Cecil.Pdb.dll</HintPath>
+    <Reference Include="Mono.Cecil.Rocks, Version=0.11.3.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e">
+      <HintPath>..\..\..\..\..\Applications\Stardew Valley.app\Contents\MacOS\MonoMod\Mono.Cecil.Rocks.dll</HintPath>
     </Reference>
-    <Reference Include="Mono.Cecil.Rocks, Version=0.11.2.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e">
-      <HintPath>..\Assemblies\Mono.Cecil.Rocks.dll</HintPath>
+    <Reference Include="MonoGame.Framework, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\..\..\..\Applications\Stardew Valley.app\Contents\MacOS\MonoGame.Framework.dll</HintPath>
     </Reference>
-    <Reference Include="MonoMod, Version=20.5.21.5, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\Assemblies\MonoMod.exe</HintPath>
+    <Reference Include="MonoMod, Version=20.11.26.2, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\..\..\..\Applications\Stardew Valley.app\Contents\MacOS\MonoMod\MonoMod.exe</HintPath>
     </Reference>
-    <Reference Include="MonoMod.Common, Version=20.5.21.5, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\Assemblies\MonoMod.Common.dll</HintPath>
+    <Reference Include="MonoMod.Common, Version=20.11.26.2, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\..\..\..\Applications\Stardew Valley.app\Contents\MacOS\MonoMod\MonoMod.Common.dll</HintPath>
     </Reference>
-    <Reference Include="MonoMod.RuntimeDetour, Version=20.5.21.5, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\Assemblies\MonoMod.RuntimeDetour.dll</HintPath>
+    <Reference Include="MonoMod.RuntimeDetour, Version=20.11.26.2, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\..\..\..\Applications\Stardew Valley.app\Contents\MacOS\MonoMod\MonoMod.RuntimeDetour.dll</HintPath>
     </Reference>
-    <Reference Include="MonoMod.Utils, Version=20.5.21.5, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\Assemblies\MonoMod.Utils.dll</HintPath>
+    <Reference Include="MonoMod.Utils, Version=20.11.26.2, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\..\..\..\Applications\Stardew Valley.app\Contents\MacOS\MonoMod\MonoMod.Utils.dll</HintPath>
     </Reference>
     <Reference Include="StardewValley, Version=1.3.7346.34259, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\Assemblies\StardewValley.exe</HintPath>
+      <HintPath>../../../../../Applications/Stardew Valley.app/Contents/MacOS/StardewValley.exe</HintPath>
     </Reference>
     <Reference Include="StardewValley.GameData, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\Assemblies\StardewValley.GameData.dll</HintPath>
+      <HintPath>..\..\..\..\..\Applications\Stardew Valley.app\Contents\MacOS\StardewValley.GameData.dll</HintPath>
     </Reference>
     <Reference Include="System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-      <HintPath>..\..\..\..\..\Applications\Stardew Valley.app\Contents\MacOS\System.dll</HintPath>
+      <HintPath>../../../../../Applications/Stardew Valley.app/Contents/MacOS/System.dll</HintPath>
     </Reference>
     <Reference Include="System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
       <HintPath>..\..\..\..\..\Applications\Stardew Valley.app\Contents\MacOS\System.Core.dll</HintPath>
@@ -77,13 +77,12 @@
     <Reference Include="System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
       <HintPath>..\..\..\..\..\Applications\Stardew Valley.app\Contents\MacOS\System.Xml.dll</HintPath>
     </Reference>
-    <Reference Include="MonoGame.Framework, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>../../../../../Applications/Stardew Valley.app/Contents/MacOS/MonoGame.Framework.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Mod\API\Errors\Error.cs" />
     <Compile Include="Mod\API\Events\EventBase.cs" />
     <Compile Include="Mod\API\Events\EventPhase.cs" />
+    <Compile Include="Mod\API\Events\Items\ArtifactDropRegistrationEvent.cs" />
     <Compile Include="Mod\API\Events\Items\ItemRegistrationEvent.cs" />
     <Compile Include="Mod\API\Events\Monsters\MineshaftSpawnRegistrationEvent.cs" />
     <Compile Include="Mod\API\Events\Monsters\MonsterRegistrationEvent.cs" />
@@ -91,6 +90,8 @@
     <Compile Include="Mod\API\Events\PhasedEvent.cs" />
     <Compile Include="Mod\API\Events\Placeables\PlaceableRegistrationEvent.cs" />
     <Compile Include="Mod\API\Events\Resources\ResourceLoadEvent.cs" />
+    <Compile Include="Mod\API\Exceptions\RegistryConflictException.cs" />
+    <Compile Include="Mod\API\Exceptions\ResultExpectationException.cs" />
     <Compile Include="Mod\API\GameBusHookAttribute.cs" />
     <Compile Include="Mod\API\InitBusHookAttribute.cs" />
     <Compile Include="Mod\API\ModuleAttribute.cs" />
@@ -103,26 +104,38 @@
     <Compile Include="Mod\API\Utility\Registry\SortableListRegistry.cs" />
     <Compile Include="Mod\API\Utility\Result.cs" />
     <Compile Include="Mod\Internal\BoolUtility.cs" />
-    <Compile Include="Mod\Internal\Exceptions\RegistryConflictException.cs" />
     <Compile Include="Mod\Internal\HookLoader.cs" />
     <Compile Include="Mod\Internal\StringUtility.cs" />
+    <Compile Include="Mod\Internal\Transformers\VanillaCropIDTransformer.cs" />
+    <Compile Include="Mod\Internal\Transformers\VanillaResourceKeyTransformers.cs" />
+    <Compile Include="Mod\Items\ArtifactDropData.cs" />
+    <Compile Include="Mod\Items\ArtifactDropDataBuilder.cs" />
+    <Compile Include="Mod\Items\ArtifactDropRegistry.cs" />
     <Compile Include="Mod\Items\Capabilities\CrystalariumizableItemCapability.cs" />
     <Compile Include="Mod\Items\Capabilities\EdibleItemCapability.cs" />
     <Compile Include="Mod\Items\Capabilities\FermentableItemCapability.cs" />
-    <Compile Include="Mod\Items\Capabilities\GeodizableItemCapability.cs" />
+    <Compile Include="Mod\Items\Capabilities\CrackableItemCapability.cs" />
+    <Compile Include="Mod\Items\Capabilities\GrowableItemCapability.cs" />
+    <Compile Include="Mod\Items\Capabilities\IncubatableItemCapability.cs" />
     <Compile Include="Mod\Items\Capabilities\ItemCapability.cs" />
+    <Compile Include="Mod\Items\Capabilities\MayonnaiseableItemCapability.cs" />
     <Compile Include="Mod\Items\Capabilities\PlaceableItemCapability.cs" />
     <Compile Include="Mod\Items\Capabilities\PreservableItemCapability.cs" />
     <Compile Include="Mod\Items\Capabilities\PreservedItemCapability.cs" />
+    <Compile Include="Mod\Items\Capabilities\RoePreservableItemCapability.cs" />
     <Compile Include="Mod\Items\Capabilities\SeedableItemCapability.cs" />
+    <Compile Include="Mod\Items\Capabilities\SmeltableItemCapability.cs" />
     <Compile Include="Mod\Items\Capabilities\WeaponizableItemCapability.cs" />
     <Compile Include="Mod\Items\Container\IContainer.cs" />
+    <Compile Include="Mod\Items\Container\IHasContainers.cs" />
     <Compile Include="Mod\Items\Container\PreservedContainer.cs" />
+    <Compile Include="Mod\Items\ItemQuality.cs" />
     <Compile Include="Mod\Items\FoodBuff.cs" />
     <Compile Include="Mod\Items\FoodType.cs" />
     <Compile Include="Mod\Items\Item.cs" />
     <Compile Include="Mod\Items\ItemRegistry.cs" />
     <Compile Include="Mod\Items\WeaponType.cs" />
+    <Compile Include="Mod\Monsters\HutchSpawnData.cs" />
     <Compile Include="Mod\Monsters\MonsterLocomotion.cs" />
     <Compile Include="Mod\Monsters\MonsterType.cs" />
     <Compile Include="Mod\Monsters\MineshaftSpawnData.cs" />

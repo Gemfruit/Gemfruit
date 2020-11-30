@@ -2,7 +2,7 @@ using System;
 
 namespace Gemfruit.Mod.Items.Capabilities
 {
-    public class WeaponizableCapability : ItemCapability
+    public class WeaponizableItemCapability : ItemCapability
     {
         public int MinimumDamage { get; }
         public int MaximumDamage { get; }
@@ -39,7 +39,7 @@ namespace Gemfruit.Mod.Items.Capabilities
 
         
 
-        public WeaponizableCapability(int minimumDamage, int maximumDamage, float knockback, int speed, 
+        public WeaponizableItemCapability(int minimumDamage, int maximumDamage, float knockback, int speed, 
             int precision, int defense, WeaponType weaponType, int baseLevel, int minimumLevel, 
             int areaOfEffect, float critChance, float critMultiplier)
         {

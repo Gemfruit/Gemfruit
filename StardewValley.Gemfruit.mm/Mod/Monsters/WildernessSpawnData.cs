@@ -6,9 +6,9 @@ namespace Gemfruit.Mod.Monsters
 {
     public readonly struct WildernessSpawnData
     {
-        public readonly Farm farm;
-        public readonly Farmer player;
-        public readonly Random rand;
-        public readonly Vector2 position;
+        public readonly Farm Farm;
+        public readonly Farmer Player;
+        public readonly Random Rand;
+        public readonly Vector2 Position;
     }
 }

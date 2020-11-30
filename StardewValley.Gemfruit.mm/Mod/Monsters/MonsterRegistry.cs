@@ -11,7 +11,7 @@ using StardewValley.Monsters;
 
 namespace Gemfruit.Mod.Monsters
 {
-    public class MonsterRegistry
+    public class MonsterRegistry : PhasableRegistry
     {
         private readonly Dictionary<ResourceKey, MonsterType> _types =
             new Dictionary<ResourceKey, MonsterType>();
@@ -35,7 +35,7 @@ namespace Gemfruit.Mod.Monsters
                 else
                 {
                     GemfruitMod.Logger.Log(LogLevel.Error, "MonsterRegistry",
-                        $"Attempted to register monster '{value.GetName()}' before corresponding lifecycle event!");
+                        $"Attempted to register monster '{value.GetName()}' before/after corresponding lifecycle event!");
                 }
             }
         }
@@ -59,9 +59,8 @@ namespace Gemfruit.Mod.Monsters
             return Optional<MonsterType>.None();
         }
 
-        public void Initialize()
+        protected override void InitializeRecords()
         {
-            _currentPhase = RegistryPhase.Open;
             GemfruitMod.InitBus.FireEvent(new MonsterRegistrationEvent(this, EventPhase.Before));
             Register(new MonsterType(new ResourceKey("green_slime"))
                 .SetMineshaftConstructor(data => new GreenSlime(data.Position, data.Level)));
@@ -107,13 +106,13 @@ namespace Gemfruit.Mod.Monsters
             
             Register(new MonsterType(new ResourceKey("wild_shadow_brute"))
                 .SetWildernessConstructor(
-                    data => new ShadowBrute(data.position)
+                    data => new ShadowBrute(data.Position)
                     {
                         focusedOnFarmers = true, wildernessFarmMonster = true
                     }));
             Register(new MonsterType(new ResourceKey("wild_golem"))
                 .SetWildernessConstructor(
-                    data => new RockGolem(data.position, data.player.combatLevel)
+                    data => new RockGolem(data.Position, data.Player.combatLevel)
                     {
                         focusedOnFarmers = true, wildernessFarmMonster = true
                     }));
@@ -122,52 +121,52 @@ namespace Gemfruit.Mod.Monsters
                     data =>
                     {
                         var mineLevel = 1;
-                        if (data.player.combatLevel >= 10) mineLevel = 140;
-                        else if (data.player.combatLevel >= 8) mineLevel = 100;
-                        else if (data.player.combatLevel >= 4) mineLevel = 41;
-                        return new GreenSlime(data.position, mineLevel)
+                        if (data.Player.combatLevel >= 10) mineLevel = 140;
+                        else if (data.Player.combatLevel >= 8) mineLevel = 100;
+                        else if (data.Player.combatLevel >= 4) mineLevel = 41;
+                        return new GreenSlime(data.Position, mineLevel)
                         {
                             wildernessFarmMonster = true
                         };
                     }));
             Register(new MonsterType(new ResourceKey("wild_galaxy_bat"))
                 .SetWildernessConstructor(
-                    data => new Bat(data.position, 9999)
+                    data => new Bat(data.Position, 9999)
                     {
                         focusedOnFarmers = true,
                         wildernessFarmMonster = true
                     }));
             Register(new MonsterType(new ResourceKey("wild_iridium_bat"))
                 .SetWildernessConstructor(
-                    data => new Bat(data.position, 172)
+                    data => new Bat(data.Position, 172)
                     {
                         focusedOnFarmers = true,
                         wildernessFarmMonster = true
                     }));
             Register(new MonsterType(new ResourceKey("wild_serpent"))
                 .SetWildernessConstructor(
-                    data => new Serpent(data.position)
+                    data => new Serpent(data.Position)
                     {
                         focusedOnFarmers = true,
                         wildernessFarmMonster = true
                     }));
             Register(new MonsterType(new ResourceKey("wild_lava_bat"))
                 .SetWildernessConstructor(
-                    data => new Bat(data.position, 81)
+                    data => new Bat(data.Position, 81)
                     {
                         focusedOnFarmers = true,
                         wildernessFarmMonster = true
                     }));
             Register(new MonsterType(new ResourceKey("wild_frost_bat"))
                 .SetWildernessConstructor(
-                    data => new Bat(data.position, 41)
+                    data => new Bat(data.Position, 41)
                     {
                         focusedOnFarmers = true,
                         wildernessFarmMonster = true
                     }));
             Register(new MonsterType(new ResourceKey("wild_flying_bat"))
                 .SetWildernessConstructor(
-                    data => new Bat(data.position, 1)
+                    data => new Bat(data.Position, 1)
                     {
                         focusedOnFarmers = true,
                         wildernessFarmMonster = true
@@ -175,13 +174,23 @@ namespace Gemfruit.Mod.Monsters
             
             Register(new MonsterType(new ResourceKey("flying_fly"))
                 .SetWildernessConstructor(
-                    data => new Fly(data.position)
+                    data => new Fly(data.Position)
                     {
                         focusedOnFarmers = true
                     }));
+            
+            // Farm Constructors
+            Register(new MonsterType(new ResourceKey("hutch_green_slime"))
+                .SetHutchConstructor(data => new GreenSlime(data.Position, 0)));
+            Register(new MonsterType(new ResourceKey("hutch_frost_jelly"))
+                .SetHutchConstructor(data => new GreenSlime(data.Position, 40)));
+            Register(new MonsterType(new ResourceKey("hutch_red_sludge"))
+                .SetHutchConstructor(data => new GreenSlime(data.Position, 80)));
+            Register(new MonsterType(new ResourceKey("hutch_purple_sludge"))
+                .SetHutchConstructor(data => new GreenSlime(data.Position, 121)));
+            
             GemfruitMod.InitBus.FireEvent(new MonsterRegistrationEvent(this, EventPhase.During));
             GemfruitMod.InitBus.FireEvent(new MonsterRegistrationEvent(this, EventPhase.After));
-            _currentPhase = RegistryPhase.Frozen;
         }
     }
 }

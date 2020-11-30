@@ -17,7 +17,7 @@ namespace Gemfruit.Mod.Resources
 
         public void Initialize()
         {
-            
+            GemfruitMod.Logger.Log(LogLevel.Info, GetType().Name, "Initializing ResourceRegistry");
         }
         
         public Optional<T> Get<T>(ResourceKey key)
