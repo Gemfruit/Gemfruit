@@ -1,7 +1,7 @@
 using System;
 using Microsoft.Xna.Framework;
 
-namespace Gemfruit.Mod.Items
+namespace Gemfruit.Mod.Placeables
 {
     public enum FurnitureType
     {

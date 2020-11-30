@@ -1,5 +1,5 @@
 using System;
-using Gemfruit.Mod.Internal.Exceptions;
+using Gemfruit.Mod.API.Exceptions;
 
 namespace Gemfruit.Mod.API.Utility
 {

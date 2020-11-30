@@ -4,9 +4,9 @@ using System.Linq;
 using Gemfruit.Mod.API;
 using Gemfruit.Mod.API.Events;
 using Gemfruit.Mod.API.Events.Items;
+using Gemfruit.Mod.API.Exceptions;
 using Gemfruit.Mod.API.Utility.Registry;
 using Gemfruit.Mod.Internal;
-using Gemfruit.Mod.Internal.Exceptions;
 
 namespace Gemfruit.Mod.Items
 {

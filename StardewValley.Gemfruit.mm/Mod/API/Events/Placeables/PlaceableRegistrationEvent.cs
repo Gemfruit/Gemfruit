@@ -1,7 +1,6 @@
-using Gemfruit.Mod.Items;
 using Gemfruit.Mod.Placeables;
 
-namespace Gemfruit.Mod.API.Events.Items
+namespace Gemfruit.Mod.API.Events.Placeables
 {
     public class PlaceableRegistrationEvent : PhasedEvent
     {

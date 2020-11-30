@@ -1,6 +1,6 @@
 using System;
 
-namespace Gemfruit.Mod.Internal.Exceptions
+namespace Gemfruit.Mod.API.Exceptions
 {
     public class ResultExpectationException : Exception
     {
