@@ -4,7 +4,7 @@ using StardewValley;
 
 namespace Gemfruit.Mod.Monsters
 {
-    public readonly struct WildernessSpawnData
+    public struct WildernessSpawnData
     {
         public readonly Farm Farm;
         public readonly Farmer Player;

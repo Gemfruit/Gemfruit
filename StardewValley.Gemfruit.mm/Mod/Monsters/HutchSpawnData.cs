@@ -2,7 +2,7 @@ using Microsoft.Xna.Framework;
 
 namespace Gemfruit.Mod.Monsters
 {
-    public readonly struct HutchSpawnData
+    public struct HutchSpawnData
     {
         public readonly Vector2 Position;
 

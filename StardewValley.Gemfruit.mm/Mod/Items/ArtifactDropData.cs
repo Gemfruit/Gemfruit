@@ -2,7 +2,7 @@ using Gemfruit.Mod.API;
 
 namespace Gemfruit.Mod.Items
 {
-    public readonly struct ArtifactDropData
+    public struct ArtifactDropData
     {
         public readonly ResourceKey Item;
         public readonly double Percentage;

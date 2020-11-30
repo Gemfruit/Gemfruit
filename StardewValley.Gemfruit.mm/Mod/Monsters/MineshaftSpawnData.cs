@@ -4,7 +4,7 @@ using StardewValley.Locations;
 
 namespace Gemfruit.Mod.Monsters
 {
-    public readonly struct MineshaftSpawnData
+    public struct MineshaftSpawnData
     {
         public readonly MineShaft Shaft;
         public readonly Random Rand;
