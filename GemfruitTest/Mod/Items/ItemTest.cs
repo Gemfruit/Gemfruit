@@ -10,8 +10,8 @@ namespace GemfruitTest.Mod.Items
         [Test]
         public void ParseFromString()
         {
-            var src =
-                "Cauliflower Seeds/40/-300/Seeds -74/Cauliflower Seeds/Plant these in the spring. Takes 12 days to produce a large cauliflower.";
+            const string src = "Cauliflower Seeds/40/-300/Seeds -74/Cauliflower Seeds/Plant these in the spring. Takes 12 days to produce a large cauliflower.";
+            
             var res = Item.ParseFromString(src);
             
             Assert.IsFalse(res.IsError());
@@ -22,7 +22,7 @@ namespace GemfruitTest.Mod.Items
             
             Assert.AreEqual(40, i.Price);
             
-            Assert.AreEqual(null, i.Capabilities.Find(c => c is EdibleItemCapability));
+            Assert.AreEqual(null, i.HasCapability<EdibleItemCapability>());
             
             Assert.AreEqual("Seeds", i.Type);
             

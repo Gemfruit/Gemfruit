@@ -5,13 +5,14 @@ using Gemfruit.Mod.API;
 using Gemfruit.Mod.API.Utility;
 using Gemfruit.Mod.Internal;
 using Gemfruit.Mod.Items.Capabilities;
+using Gemfruit.Mod.Items.Container;
 using Gemfruit.Mod.Placeables;
 using Gemfruit.Mod.Placeables.Capabilities;
 using Microsoft.Xna.Framework;
 
 namespace Gemfruit.Mod.Items
 {
-    public class Item
+    public class Item : IHasItemCapabilities, IHasContainers
     {
         public ResourceKey Key { get; set; }
         
@@ -27,11 +28,13 @@ namespace Gemfruit.Mod.Items
         public string Description { get; protected set; }
         public int MaxStackSize { get; protected set; }
 
-        public List<ItemCapability> Capabilities { get; }
+        private List<ItemCapability> Capabilities { get; }
+        private List<IContainer> Containers { get; }
 
         public Item()
         {
             Capabilities = new List<ItemCapability>();
+            Containers = new List<IContainer>();
         }
         
 
@@ -184,7 +187,16 @@ namespace Gemfruit.Mod.Items
                 // TODO: This is fairly fragile. Possibly change this?
                 if (i.Name.Contains("Geode"))
                 {
-                    i.Capabilities.Add(new CrackableItemCapability(parts[6].Split().Select(int.Parse).ToList()));
+                    if (parts.Length > 7)
+                    {
+                        i.Capabilities.Add(new CrackableItemCapability(parts[6].Split().Select(int.Parse).ToList()));
+                    }
+                    else
+                    {
+                        GemfruitMod.Logger.Log(LogLevel.Warning, "Item", "Geode found but had no geode " +
+                                                                         "information - it won't be treated like a " +
+                                                                         "Geode!");
+                    }
                 }
             }
             catch (Exception e)
@@ -199,6 +211,60 @@ namespace Gemfruit.Mod.Items
         {
             SpriteSheet = sheet;
             Rect = pos;
+        }
+
+        public Result<TCap, Exception> GetCapability<TCap>() where TCap : ItemCapability
+        {
+            foreach (var c in Capabilities)
+            {
+                if (c is TCap cap)
+                {
+                    return Result<TCap, Exception>.FromValue(cap);
+                }
+            }
+            return Result<TCap, Exception>.FromException(new Exception($"unavailable capability of type '{typeof(TCap).Name}'"));
+        }
+
+        public bool HasCapability<TCap>() where TCap : ItemCapability => Capabilities.Any(c => c is TCap);
+
+        public bool HasCapability(Type capType)
+        {
+            return capType.IsSubclassOf(typeof(ItemCapability)) && Capabilities.Any(c => c.GetType() == capType);
+        }
+
+        public void AddCapability(ItemCapability capability)
+        {
+            if (HasCapability(capability.GetType()))
+            {
+                throw new Exception($"bad duplicate capability of type {capability.GetType().Name} in '{Name}'");
+            }
+            Capabilities.Add(capability);
+            // TODO: Container initialization?
+        }
+
+        public Result<TCon, Exception> GetContainer<TCon>() where TCon : IContainer
+        {
+            foreach (var c in Containers)
+            {
+                if (c is TCon con)
+                {
+                    return Result<TCon, Exception>.FromValue(con);
+                }
+            }
+            return Result<TCon, Exception>.FromException(new Exception($"unavailable container of type '{typeof(TCon).Name}'"));
+        }
+
+        public bool HasContainer<TCon>() where TCon : IContainer => Containers.Any(c => c is TCon);
+
+        public bool HasContainer(Type containerType)
+        {
+            return containerType.IsSubclassOf(typeof(IContainer)) && Containers.Any(c => c.GetType() == containerType);
+        }
+
+        public bool TryFillContainer<TCon>(IReadOnlyDictionary<string, object> dict) where TCon : IContainer
+        {
+            // TODO: Implement
+            throw new NotImplementedException();
         }
     }
 }

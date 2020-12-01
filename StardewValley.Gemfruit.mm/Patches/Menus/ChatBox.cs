@@ -20,7 +20,7 @@ namespace StardewValley.Menus
             switch (head)
             {
                 case "gemfruit":
-                    addMessage("CalmBit: ;)", Color.Purple);
+                    addMessage("iikorni: ;)", Color.Purple);
                     enableCheats = true;
                     return;
                 default:

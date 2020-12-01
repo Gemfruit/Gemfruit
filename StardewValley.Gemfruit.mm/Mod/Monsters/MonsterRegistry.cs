@@ -16,8 +16,6 @@ namespace Gemfruit.Mod.Monsters
         private readonly Dictionary<ResourceKey, MonsterType> _types =
             new Dictionary<ResourceKey, MonsterType>();
 
-        private RegistryPhase _currentPhase = RegistryPhase.Closed;
-
         public void Register(MonsterType value)
         {
             if (value == null)
@@ -27,7 +25,7 @@ namespace Gemfruit.Mod.Monsters
             }
             else
             {
-                if (_currentPhase == RegistryPhase.Open)
+                if (CurrentPhase == RegistryPhase.Open)
                 {
                     GemfruitMod.Logger.Log(LogLevel.Debug, "MonsterRegistry", $"Adding type for {value.GetName()}");
                     _types.Add(value.GetName(), value);
@@ -42,7 +40,7 @@ namespace Gemfruit.Mod.Monsters
 
         public Optional<MonsterType> Get(ResourceKey key)
         {
-            if (_currentPhase == RegistryPhase.Frozen)
+            if (CurrentPhase == RegistryPhase.Frozen)
             {
                 if (_types.ContainsKey(key))
                     return new Optional<MonsterType>(_types[key]);

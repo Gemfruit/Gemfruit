@@ -7,10 +7,12 @@ using Gemfruit.Mod.API.Exceptions;
 using Gemfruit.Mod.API.Utility;
 using Gemfruit.Mod.API.Utility.Registry;
 using Gemfruit.Mod.Internal;
+using Gemfruit.Mod.Internal.Helpers;
 using Gemfruit.Mod.Internal.Transformers;
 using Gemfruit.Mod.Items.Capabilities;
-using Microsoft.Xna.Framework;
 using StardewValley;
+
+using static Gemfruit.Mod.Internal.Helpers.VanillaCapabilityHelper;
 
 namespace Gemfruit.Mod.Items
 {
@@ -21,76 +23,6 @@ namespace Gemfruit.Mod.Items
 
         private static readonly Dictionary<ResourceKey, Action<Item>> AttachmentActions =
             new Dictionary<ResourceKey, Action<Item>>();
-
-        private static Rectangle ItemIdToRectangle(int id)
-        {
-            var x = id % 24 * 16;
-            var y = id / 24 * 16;
-            return new Rectangle(x, y, 16, 16);
-        }
-
-        private static Rectangle WeaponIdToRectangle(int id)
-        {
-            var x = id % 8 * 16;
-            var y = id / 8 * 16;
-            return new Rectangle(x, y, 16, 16);
-        }
-
-        private static readonly Action<Item> DefaultVegetable = item =>
-        {
-            item.Capabilities.Add(new PreservableItemCapability(new ResourceKey("pickles"), 4000));
-            item.Capabilities.Add(new FermentableItemCapability(new ResourceKey("juice"), 6000));
-        };
-
-        private static Action<Item> SeedableVegetable(ResourceKey seed)
-        {
-            return item =>
-            {
-                DefaultVegetable(item);
-                item.Capabilities.Add(new SeedableItemCapability(seed));
-            };
-        }
-
-        private static readonly Action<Item> DefaultFruit = item =>
-        {
-            item.Capabilities.Add(new PreservableItemCapability(new ResourceKey("jelly"), 4000));
-            item.Capabilities.Add(new PreservableItemCapability(new ResourceKey("wine"), 10000));
-        };
-
-        private static Action<Item> SeedableFruit(ResourceKey seed)
-        {
-            return item =>
-            {
-                DefaultFruit(item);
-                item.Capabilities.Add(new SeedableItemCapability(seed));
-            };
-        }
-
-        private static readonly Action<Item> DefaultCrystal = item =>
-        {
-            item.Capabilities.Add(
-                new CrystalariumizableItemCapability(CrystalariumizableItemCapability.DefaultCrystalTime));
-        };
-
-        private static Action<Item> TimedCrystal(int minutes)
-        {
-            return item => { item.Capabilities.Add(new CrystalariumizableItemCapability(minutes)); };
-        }
-
-        private static Action<Item> Seed(ResourceKey crop)
-        {
-            return item => item.Capabilities.Add(new GrowableItemCapability(crop));
-        }
-
-        private static Action<Item> Mayonnaise(ResourceKey mayo)
-        {
-            return item => item.Capabilities.Add(new MayonnaiseableItemCapability(mayo));
-        }
-
-        private static Action<Item> QualityMayonnaise(ResourceKey mayo, ItemQuality quality)
-        {
-            return item => item.Capabilities.Add(new MayonnaiseableItemCapability(mayo, quality: quality));
-        }
 
         static ItemRegistry()
         {
@@ -109,9 +41,9 @@ namespace Gemfruit.Mod.Items
             AttachmentActions.Add(new ResourceKey("green_bean"), SeedableVegetable(new ResourceKey("bean_starter")));
             AttachmentActions.Add(new ResourceKey("hops"), item =>
             {
-                item.Capabilities.Add(new PreservableItemCapability(new ResourceKey("pickles"), 4000));
-                item.Capabilities.Add(new FermentableItemCapability(new ResourceKey("pale_ale"), 2250));
-                item.Capabilities.Add(new SeedableItemCapability(new ResourceKey("hops_starter")));
+                item.AddCapability(new PreservableItemCapability(new ResourceKey("pickles"), 4000));
+                item.AddCapability(new FermentableItemCapability(new ResourceKey("pale_ale"), 2250));
+                item.AddCapability(new SeedableItemCapability(new ResourceKey("hops_starter")));
             });
             AttachmentActions.Add(new ResourceKey("kale"), SeedableVegetable(new ResourceKey("kale_seeds")));
             AttachmentActions.Add(new ResourceKey("parsnip"), SeedableVegetable(new ResourceKey("parsnip_seeds")));
@@ -122,16 +54,16 @@ namespace Gemfruit.Mod.Items
                 SeedableVegetable(new ResourceKey("red_cabbage_seeds")));
             AttachmentActions.Add(new ResourceKey("tea_leaves"), item =>
             {
-                item.Capabilities.Add(new PreservableItemCapability(new ResourceKey("pickles"), 4000));
-                item.Capabilities.Add(new FermentableItemCapability(new ResourceKey("green_tea"), 180));
+                item.AddCapability(new PreservableItemCapability(new ResourceKey("pickles"), 4000));
+                item.AddCapability(new FermentableItemCapability(new ResourceKey("green_tea"), 180));
             });
             AttachmentActions.Add(new ResourceKey("tomato"), SeedableVegetable(new ResourceKey("tomato_seeds")));
             AttachmentActions.Add(new ResourceKey("unmilled_rice"), SeedableVegetable(new ResourceKey("rice_shoot")));
             AttachmentActions.Add(new ResourceKey("wheat"), item =>
             {
-                item.Capabilities.Add(new PreservableItemCapability(new ResourceKey("pickles"), 4000));
-                item.Capabilities.Add(new FermentableItemCapability(new ResourceKey("beer"), 1750));
-                item.Capabilities.Add(new SeedableItemCapability(new ResourceKey("wheat_seeds")));
+                item.AddCapability(new PreservableItemCapability(new ResourceKey("pickles"), 4000));
+                item.AddCapability(new FermentableItemCapability(new ResourceKey("beer"), 1750));
+                item.AddCapability(new SeedableItemCapability(new ResourceKey("wheat_seeds")));
             });
             AttachmentActions.Add(new ResourceKey("yam"), SeedableVegetable(new ResourceKey("yam_seeds")));
 
@@ -161,11 +93,11 @@ namespace Gemfruit.Mod.Items
 
             // OTHER SEEDS
             AttachmentActions.Add(new ResourceKey("wild_horseradish"),
-                item => { item.Capabilities.Add(new SeedableItemCapability(new ResourceKey("spring_seeds"))); });
+                item => { item.AddCapability(new SeedableItemCapability(new ResourceKey("spring_seeds"))); });
             AttachmentActions.Add(new ResourceKey("common_mushroom"),
-                item => { item.Capabilities.Add(new SeedableItemCapability(new ResourceKey("fall_seeds"))); });
+                item => { item.AddCapability(new SeedableItemCapability(new ResourceKey("fall_seeds"))); });
             AttachmentActions.Add(new ResourceKey("winter_root"),
-                item => { item.Capabilities.Add(new SeedableItemCapability(new ResourceKey("winter_seeds"))); });
+                item => { item.AddCapability(new SeedableItemCapability(new ResourceKey("winter_seeds"))); });
 
             // SEEDS
             AttachmentActions.Add(new ResourceKey("rice_shoot"), Seed(new ResourceKey("unmilled_rice")));
@@ -179,8 +111,8 @@ namespace Gemfruit.Mod.Items
             AttachmentActions.Add(new ResourceKey("sunflower_seeds"), Seed(new ResourceKey("sunflower")));
             AttachmentActions.Add(new ResourceKey("coffee_bean"), item =>
             {
-                item.Capabilities.Add(new FermentableItemCapability(new ResourceKey("coffee"), 120, 5));
-                item.Capabilities.Add(new GrowableItemCapability(new ResourceKey("coffee")));
+                item.AddCapability(new FermentableItemCapability(new ResourceKey("coffee"), 120, 5));
+                item.AddCapability(new GrowableItemCapability(new ResourceKey("coffee")));
             });
             AttachmentActions.Add(new ResourceKey("poppy_seeds"), Seed(new ResourceKey("poppy")));
             AttachmentActions.Add(new ResourceKey("spangle_seeds"), Seed(new ResourceKey("summer_spangle")));
@@ -217,7 +149,7 @@ namespace Gemfruit.Mod.Items
 
             // OTHER PRESERVABLE
             AttachmentActions.Add(new ResourceKey("roe"),
-                item => { item.Capabilities.Add(new RoePreservableItemCapability()); });
+                item => { item.AddCapability(new RoePreservableItemCapability()); });
 
             // MAYO
             AttachmentActions.Add(new ResourceKey("dinosaur_egg"),
@@ -304,6 +236,15 @@ namespace Gemfruit.Mod.Items
             GemfruitMod.InitBus.FireEvent(new ItemRegistrationEvent(this, EventPhase.After));
         }
 
+        /// <summary>
+        /// Private internal function for parsing vanilla data from the game's content files.
+        /// </summary>
+        /// <remarks>
+        /// This is one of the hackiest methods in the entire project - it's meant to, ostenisbly, parse vanilla data.
+        /// Since we're trying to fit as much data as we can with has little outside intervention as possible,
+        /// we're forced to jump through a few hoops to interpret the data in a way that meshes with our
+        /// system in a sensible way.
+        /// </remarks>
         private void VanillaRegistration()
         {
             var objectInfo = _content.Load<Dictionary<int, string>>("Data\\ObjectInformation");
@@ -317,9 +258,8 @@ namespace Gemfruit.Mod.Items
                 else
                 {
                     var val = item.Unwrap();
-                    val.AssignSpriteSheetReference(new ResourceKey("Maps\\springobjects"), ItemIdToRectangle(i));
-                    val.Key = VanillaResourceKeyTransformers.ApplyTransformerForKey(val,
-                        new ResourceKey(StringUtility.SanitizeName(val.Name)));
+                    val.AssignSpriteSheetReference(new ResourceKey("Maps\\springobjects"), VanillaSpritesheetHelper.ItemIdToRectangle(i));
+                    val.Key = VanillaResourceKeyTransformers.ApplyTransformerForKey(val, i, new ResourceKey(StringUtility.SanitizeName(val.Name)));
                     if (_dictionary.ContainsKey(val.Key))
                     {
                         val.Key = new ResourceKey(StringUtility.SanitizeName(val.Name) + "_" + i);
@@ -346,9 +286,8 @@ namespace Gemfruit.Mod.Items
                 else
                 {
                     var val = item.Unwrap();
-                    val.AssignSpriteSheetReference(new ResourceKey("TileSheets\\weapons"), WeaponIdToRectangle(i));
-                    val.Key = VanillaResourceKeyTransformers.ApplyTransformerForKey(val,
-                        new ResourceKey(StringUtility.SanitizeName(val.Name)));
+                    val.AssignSpriteSheetReference(new ResourceKey("TileSheets\\weapons"), VanillaSpritesheetHelper.WeaponIdToRectangle(i));
+                    val.Key = VanillaResourceKeyTransformers.ApplyTransformerForKey(val, i, new ResourceKey(StringUtility.SanitizeName(val.Name)));
                     if (_dictionary.ContainsKey(val.Key))
                     {
                         val.Key = new ResourceKey(StringUtility.SanitizeName(val.Name) + "_" + i);

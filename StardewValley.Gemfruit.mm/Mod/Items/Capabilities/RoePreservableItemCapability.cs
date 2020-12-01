@@ -5,11 +5,11 @@ namespace Gemfruit.Mod.Items.Capabilities
 {
     public class RoePreservableItemCapability : PreservableItemCapability
     {
-        private static readonly ResourceKey CAVIAR_KEY = new ResourceKey("caviar");
-        private static readonly ResourceKey STURGEON_KEY = new ResourceKey("sturgeon");
+        private static readonly ResourceKey CaviarKey = new ResourceKey("caviar");
+        private static readonly ResourceKey SturgeonKey = new ResourceKey("sturgeon");
 
-        private static readonly int STURGEON_TIME = 6000;
-        
+        private const int SturgeonTime = 6000;
+
         public RoePreservableItemCapability() : base(new ResourceKey("aged_roe"), 4000)
         {
             
@@ -17,18 +17,18 @@ namespace Gemfruit.Mod.Items.Capabilities
 
         public override ResourceKey GetPreserveItem(IHasContainers item)
         {
-            if (!item.HasContainer(typeof(PreservedContainer))) return base.GetPreserveItem(item);
+            if (!item.HasContainer<PreservedContainer>()) return base.GetPreserveItem(item);
             
-            var preserved = item.GetContainer<PreservedContainer>();
-            return preserved.PreservableItem.Equals(STURGEON_KEY) ? CAVIAR_KEY : base.GetPreserveItem(item);
+            var preserved = item.GetContainer<PreservedContainer>().Unwrap();
+            return preserved.PreservableItem.Equals(SturgeonKey) ? CaviarKey : base.GetPreserveItem(item);
         }
 
         public override int GetTimeToReady(IHasContainers item)
         {
-            if (!item.HasContainer(typeof(PreservedContainer))) return base.GetTimeToReady(item);
+            if (!item.HasContainer<PreservedContainer>()) return base.GetTimeToReady(item);
             
-            var preserved = item.GetContainer<PreservedContainer>();
-            return preserved.PreservableItem.Equals(STURGEON_KEY) ? STURGEON_TIME : base.GetTimeToReady(item);
+            var preserved = item.GetContainer<PreservedContainer>().Unwrap();
+            return preserved.PreservableItem.Equals(SturgeonKey) ? SturgeonTime : base.GetTimeToReady(item);
         }
     }
 }

@@ -58,9 +58,12 @@
     <Compile Include="Mod\API\Utility\Registry\SortableListRegistry.cs" />
     <Compile Include="Mod\API\Utility\Result.cs" />
     <Compile Include="Mod\Internal\BoolUtility.cs" />
+    <Compile Include="Mod\Internal\Helpers\VanillaCapabilityHelper.cs" />
+    <Compile Include="Mod\Internal\Helpers\VanillaSpritesheetHelper.cs" />
     <Compile Include="Mod\Internal\HookLoader.cs" />
     <Compile Include="Mod\Internal\StringUtility.cs" />
     <Compile Include="Mod\Internal\Transformers\VanillaCropIDTransformer.cs" />
+    <Compile Include="Mod\Internal\Transformers\VanillaItemIDRejectionList.cs" />
     <Compile Include="Mod\Internal\Transformers\VanillaResourceKeyTransformers.cs" />
     <Compile Include="Mod\Items\ArtifactDropData.cs" />
     <Compile Include="Mod\Items\ArtifactDropDataBuilder.cs" />
@@ -70,6 +73,7 @@
     <Compile Include="Mod\Items\Capabilities\FermentableItemCapability.cs" />
     <Compile Include="Mod\Items\Capabilities\CrackableItemCapability.cs" />
     <Compile Include="Mod\Items\Capabilities\GrowableItemCapability.cs" />
+    <Compile Include="Mod\Items\Capabilities\IHasItemCapabilities.cs" />
     <Compile Include="Mod\Items\Capabilities\IncubatableItemCapability.cs" />
     <Compile Include="Mod\Items\Capabilities\ItemCapability.cs" />
     <Compile Include="Mod\Items\Capabilities\MayonnaiseableItemCapability.cs" />

@@ -48,15 +48,20 @@ namespace Gemfruit.Mod.Items
                         VanillaPairs[item].Add(loc, pct);
                     }
                 }
+                else if(chances[0] != "")
+                {
+                    throw new Exception($"for some reason, '{item}' has an uneven number of artifact chances - '{chances.Length}'");
+                }
                 else
                 {
-                    throw new Exception($"BAD ARTIFACT CHANCE LENGTH '{chances.Length}'");
+                    GemfruitMod.Logger.Log(LogLevel.Warning, GetType().Name,
+                        $"for some reason, '{item}' doesn't has an empty chance def");
                 }
             }
             else
             {
                 GemfruitMod.Logger.Log(LogLevel.Warning, GetType().Name,
-                    $"For some reason, '{item}' doesn't have a chance as an artifact");
+                    $"for some reason, '{item}' doesn't have a chance as an artifact");
             }
         }
 

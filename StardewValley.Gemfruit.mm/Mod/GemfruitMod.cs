@@ -149,6 +149,19 @@ namespace Gemfruit.Mod
         public static void LoadGameHooks() => LoadBusHook(GameBus, "GameBus");
         public static void LoadInitHooks() => LoadBusHook(InitBus, "InitBus");
 
+        private static Attribute GetAttributeForName(MethodInfo m, string name)
+        {
+            switch (name)
+            {
+                case "InitBus":
+                    return m.GetCustomAttribute<InitBusHookAttribute>();
+                case "GameBus":
+                    return m.GetCustomAttribute<GameBusHookAttribute>();
+                default:
+                    throw new ArgumentException($"invalid bus type {name}");
+            }
+        }
+
         private static void LoadBusHook(EventBus bus, string name)
         {
             foreach (var mod in _modList)
@@ -156,7 +169,7 @@ namespace Gemfruit.Mod
                 var methods = mod.Value.GetRuntimeMethods();
                 foreach (var m in methods)
                 {
-                    var attribute = m.GetCustomAttribute<InitBusHookAttribute>();
+                    var attribute = GetAttributeForName(m, name);
                     if (attribute == null) continue;
                     Logger.Log(LogLevel.Debug, "GemfruitMod", $"Found a(n) {name} hook for mod '{mod.Key}' - '{mod.Value.Name}#{m.Name}");
                     var paramList = m.GetParameters();
