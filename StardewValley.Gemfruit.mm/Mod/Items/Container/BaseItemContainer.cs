@@ -6,34 +6,34 @@ using Gemfruit.Mod.Internal;
 
 namespace Gemfruit.Mod.Items.Container
 {
-    public class PreservedContainer : IContainer
+    public class BaseItemContainer : IContainer
     {
-        public ResourceKey PreservableItem { get; protected set; }
+        public ResourceKey BaseItem { get; set; }
 
         public Optional<Error> DeserializeFrom(IReadOnlyDictionary<string, object> dict)
         {
             // TODO: A Deserialization API should probably just have functions to auto-magically handle errors like this.
-            if (dict.TryGetValue("preservable_item", out var tmp))
+            if (dict.TryGetValue("base_item", out var tmp))
             {
                 if (tmp is ResourceKey key)
                 {
-                    PreservableItem = key;
+                    BaseItem = key;
                 }
                 else
                 {
-                    return new Optional<Error>(new Error(this, $"Value of key 'preservable_item' not a ResourceKey!"));
+                    return new Optional<Error>(new Error(this, $"Value of key 'base_item' not a ResourceKey!"));
                 }
             }
             else
             {
-               return new Optional<Error>(new Error(this, $"Key 'preservable_item' not found!"));
+               return new Optional<Error>(new Error(this, $"Key 'base_item' not found!"));
             }
             return Optional<Error>.None();
         }
 
         public Optional<Error> SerializeTo(IDictionary<string, object> dict)
         {
-            dict.Add("preservable_item", PreservableItem);
+            dict.Add("base_item", BaseItem);
             return Optional<Error>.None();
         }
     }

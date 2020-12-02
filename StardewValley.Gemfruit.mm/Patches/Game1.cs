@@ -34,7 +34,12 @@ namespace StardewValley
                 GemfruitMod.WildernessSpawnRegistry.Initialize();
                 GemfruitMod.PlaceableRegistry.Initialize();
                 GemfruitMod.ItemRegistry.Initialize();
+                GemfruitMod.PreservesRecipeRegistry.Initialize();
+                GemfruitMod.KegRecipeRegistry.Initialize();
+                GemfruitMod.MayonnaiseRecipeRegistry.Initialize();
+                GemfruitMod.CrystalariumRecipeRegistry.Initialize();
                 GemfruitMod.ArtifactDropRegistry.Initialize();
+                GemfruitMod.GeodeResultRegistry.Initialize();
                 GemfruitMod.LoadGameHooks();
             }
             catch (Exception e)

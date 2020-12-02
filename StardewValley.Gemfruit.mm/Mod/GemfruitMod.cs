@@ -7,6 +7,7 @@ using Gemfruit.Mod.API;
 using Gemfruit.Mod.API.Events;
 using Gemfruit.Mod.Internal;
 using Gemfruit.Mod.Items;
+using Gemfruit.Mod.Items.Crafting;
 using Gemfruit.Mod.Monsters;
 using Gemfruit.Mod.Placeables;
 using Gemfruit.Mod.Resources;
@@ -40,18 +41,23 @@ namespace Gemfruit.Mod
         public static MonsterRegistry MonsterRegistry { get; private set; }
         public static MineshaftSpawnRegistry MineshaftSpawnRegistry { get; private set; }
         public static WildernessSpawnRegistry WildernessSpawnRegistry { get; private set; }
+        public static PreservesRecipeRegistry PreservesRecipeRegistry { get; private set; }
+        public static KegRecipeRegistry KegRecipeRegistry { get; private set; }
+        public static MayonnaiseRecipeRegistry MayonnaiseRecipeRegistry { get; private set; }
+        public static CrystalariumRecipeRegistry CrystalariumRecipeRegistry { get; private set; }
         public static ArtifactDropRegistry ArtifactDropRegistry { get; private set; }
+        public static GeodeResultRegistry GeodeResultRegistry { get; private set; }
+
         
         private static Dictionary<string, Type> _modList = new Dictionary<string, Type>();
         private static List<string> _modAssetPaths = new List<string>();
 
         public static void Initialize(Game1 game)
         {
-            Console.WriteLine("We at least get here...");
             #if DEBUG
                 Logger.MaskLevel = LogLevel.Trace;
             #else
-                Logger.MaskLevel = LogLevel.INFO;
+                Logger.MaskLevel = LogLevel.Info;
             #endif
             Logger.Log(LogLevel.Info, "GemfruitMod", "Loading hooks...");
             HookLoader.LoadHooks();
@@ -67,8 +73,18 @@ namespace Gemfruit.Mod
             MineshaftSpawnRegistry = new MineshaftSpawnRegistry();
             Logger.Log(LogLevel.Info, "GemfruitMod", "WildernessSpawnRegistry creation");
             WildernessSpawnRegistry = new WildernessSpawnRegistry();
+            Logger.Log(LogLevel.Info, "GemfruitMod", "PreservesRecipeRegistry creation");
+            PreservesRecipeRegistry = new PreservesRecipeRegistry();
+            Logger.Log(LogLevel.Info, "GemfruitMod", "KegRecipeRegistry creation");
+            KegRecipeRegistry = new KegRecipeRegistry();
+            Logger.Log(LogLevel.Info, "GemfruitMod", "MayonnaiseRecipeRegistry creation");
+            MayonnaiseRecipeRegistry = new MayonnaiseRecipeRegistry();
+            Logger.Log(LogLevel.Info, "GemfruitMod", "CrystalariumRecipeRegistry creation");
+            CrystalariumRecipeRegistry = new CrystalariumRecipeRegistry();
             Logger.Log(LogLevel.Info, "GemfruitMod", "ArtifactDropRegistry creation");
             ArtifactDropRegistry = new ArtifactDropRegistry();
+            Logger.Log(LogLevel.Info, "GemfruitMod", "GeodeResultRegistry creation");
+            GeodeResultRegistry = new GeodeResultRegistry();
         }
     
         public static void LoadMods()

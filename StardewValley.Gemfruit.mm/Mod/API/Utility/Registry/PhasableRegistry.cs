@@ -1,3 +1,4 @@
+using Gemfruit.Mod.API.Exceptions;
 using Gemfruit.Mod.Internal;
 
 namespace Gemfruit.Mod.API.Utility.Registry
@@ -13,6 +14,7 @@ namespace Gemfruit.Mod.API.Utility.Registry
             InitializeRecords();
             CurrentPhase = RegistryPhase.Frozen;
         }
+        
 
         protected abstract void InitializeRecords();
     }

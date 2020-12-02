@@ -12,7 +12,7 @@ using Microsoft.Xna.Framework;
 
 namespace Gemfruit.Mod.Items
 {
-    public class Item : IHasItemCapabilities, IHasContainers
+    public class Item : IHasKey, IHasItemCapabilities
     {
         public ResourceKey Key { get; set; }
         
@@ -29,12 +29,10 @@ namespace Gemfruit.Mod.Items
         public int MaxStackSize { get; protected set; }
 
         private List<ItemCapability> Capabilities { get; }
-        private List<IContainer> Containers { get; }
 
         public Item()
         {
             Capabilities = new List<ItemCapability>();
-            Containers = new List<IContainer>();
         }
         
 
@@ -183,21 +181,6 @@ namespace Gemfruit.Mod.Items
                             break;
                     }
                 }
-
-                // TODO: This is fairly fragile. Possibly change this?
-                if (i.Name.Contains("Geode"))
-                {
-                    if (parts.Length > 7)
-                    {
-                        i.Capabilities.Add(new CrackableItemCapability(parts[6].Split().Select(int.Parse).ToList()));
-                    }
-                    else
-                    {
-                        GemfruitMod.Logger.Log(LogLevel.Warning, "Item", "Geode found but had no geode " +
-                                                                         "information - it won't be treated like a " +
-                                                                         "Geode!");
-                    }
-                }
             }
             catch (Exception e)
             {
@@ -241,30 +224,10 @@ namespace Gemfruit.Mod.Items
             Capabilities.Add(capability);
             // TODO: Container initialization?
         }
-
-        public Result<TCon, Exception> GetContainer<TCon>() where TCon : IContainer
+        
+        public ResourceKey GetResourceKey()
         {
-            foreach (var c in Containers)
-            {
-                if (c is TCon con)
-                {
-                    return Result<TCon, Exception>.FromValue(con);
-                }
-            }
-            return Result<TCon, Exception>.FromException(new Exception($"unavailable container of type '{typeof(TCon).Name}'"));
-        }
-
-        public bool HasContainer<TCon>() where TCon : IContainer => Containers.Any(c => c is TCon);
-
-        public bool HasContainer(Type containerType)
-        {
-            return containerType.IsSubclassOf(typeof(IContainer)) && Containers.Any(c => c.GetType() == containerType);
-        }
-
-        public bool TryFillContainer<TCon>(IReadOnlyDictionary<string, object> dict) where TCon : IContainer
-        {
-            // TODO: Implement
-            throw new NotImplementedException();
+            return Key;
         }
     }
 }

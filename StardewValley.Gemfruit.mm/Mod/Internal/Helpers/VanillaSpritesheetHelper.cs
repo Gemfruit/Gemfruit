@@ -26,5 +26,19 @@ namespace Gemfruit.Mod.Internal.Helpers
             var y = id / 8 * 16;
             return new Rectangle(x, y, 16, 16);
         }
+        
+        internal static Point FurnitureIdToLocation(int id)
+        {
+            var x = id % 32 * 16;
+            var y = id / 32 * 16;
+            return new Point(x, y);
+        }
+
+        internal static Point CraftableIdToLocation(int id)
+        {
+            var x = id % 8 * 16;
+            var y = id / 8 * 32;
+            return new Point(x, y);
+        }
     }
 }

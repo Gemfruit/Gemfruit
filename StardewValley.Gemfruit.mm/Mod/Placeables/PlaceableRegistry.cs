@@ -3,39 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using Gemfruit.Mod.API;
 using Gemfruit.Mod.API.Events;
-using Gemfruit.Mod.API.Events.Items;
 using Gemfruit.Mod.API.Events.Placeables;
-using Gemfruit.Mod.API.Exceptions;
 using Gemfruit.Mod.API.Utility;
 using Gemfruit.Mod.API.Utility.Registry;
 using Gemfruit.Mod.Internal;
+using Gemfruit.Mod.Internal.Helpers;
 using Gemfruit.Mod.Items;
-using Microsoft.Xna.Framework;
 using StardewValley;
 
 namespace Gemfruit.Mod.Placeables
 {
-    public class PlaceableRegistry : PhasableRegistry
+    public class PlaceableRegistry : KeyedRegistry<Placeable>
     {
         private readonly LocalizedContentManager _content;
         private readonly Dictionary<ResourceKey, Placeable> _dictionary = new Dictionary<ResourceKey, Placeable>();
         private static readonly Dictionary<ResourceKey, Action<Placeable>> AttachmentActions = new Dictionary<ResourceKey, Action<Placeable>>();
         private static string _furnitureDefaultDesc;
 
-        private static Point FurnitureIdToLocation(int id)
-        {
-            var x = id % 32 * 16;
-            var y = id / 32 * 16;
-            return new Point(x, y);
-        }
-
-        private static Point CraftableIdToLocation(int id)
-        {
-            var x = id % 8 * 16;
-            var y = id / 8 * 32;
-            return new Point(x, y);
-        }
-        
         public PlaceableRegistry(LocalizedContentManager content)
         {
             _content = content;
@@ -64,7 +48,7 @@ namespace Gemfruit.Mod.Placeables
                 {
                     var val = plac.Unwrap();
                     var r = val.Rect;
-                    r.Location = FurnitureIdToLocation(i);
+                    r.Location = VanillaSpritesheetHelper.FurnitureIdToLocation(i);
                     val.AssignSpriteSheetReference(new ResourceKey("TileSheets\\furniture"), r);
 
                     val.Key = new ResourceKey(StringUtility.SanitizeName(val.Name));
@@ -89,7 +73,7 @@ namespace Gemfruit.Mod.Placeables
                 {
                     var val = plac.Unwrap();
                     var r = val.Rect;
-                    r.Location = CraftableIdToLocation(i);
+                    r.Location = VanillaSpritesheetHelper.CraftableIdToLocation(i);
                     val.AssignSpriteSheetReference(new ResourceKey("TileSheets\\Craftables"), r);
 
                     val.Key = new ResourceKey(StringUtility.SanitizeName(val.Name));
@@ -114,30 +98,20 @@ namespace Gemfruit.Mod.Placeables
                 r.Register(fi.Key, fi);
             }
         }
-        
-        public void Register(ResourceKey key, Placeable plac)
-        {
-            if (CurrentPhase == RegistryPhase.Open)
-            {
-                if (_dictionary.ContainsKey(key))
-                {
-                    throw new RegistryConflictException(key);
-                }
-                
-                if (AttachmentActions.ContainsKey(key))
-                {
-                    AttachmentActions[key].Invoke(plac);
-                }
 
-                GemfruitMod.Logger.Log(LogLevel.Debug, GetType().Name,
-                    $"Registering placeable '{key}'");
-                _dictionary.Add(key, plac);
-            }
-            else
+        protected override void AddItem(ResourceKey key, Placeable value)
+        {
+            if (AttachmentActions.ContainsKey(key))
             {
-                GemfruitMod.Logger.Log(LogLevel.Error, GetType().Name,
-                    $"Attempted to register '{key}' before corresponding lifecycle event!");
+                AttachmentActions[key].Invoke(value);
             }
+            
+            _dictionary.Add(key, value);
+        }
+
+        protected override bool HasKey(ResourceKey key)
+        {
+            return _dictionary.ContainsKey(key);
         }
 
         public Optional<Placeable> Get(ResourceKey key)

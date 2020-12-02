@@ -35,6 +35,13 @@ namespace Gemfruit.Mod.Monsters
                         $"Can't spawn '{name}' - no wilderness constructor!");
                     return null;
                 };
+            _hutchConstructor =
+                _ =>
+                {
+                    GemfruitMod.Logger.Log(LogLevel.Error, "MonsterType",
+                        $"Can't spawn '{name}' - no hutch constructor!");
+                    return null;
+                };
         }
 
 

@@ -29,7 +29,7 @@ namespace Gemfruit.Mod.Monsters
 
             return Optional<ResourceKey>.None();
         }
-
+        
         protected override void InitializeRecords()
         {
             bool InfestedBigSlimePredicate(MineShaft s, Random r, int x, int y) => r.NextDouble() < 0.2;

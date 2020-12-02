@@ -4,19 +4,36 @@ using System.Linq;
 using Gemfruit.Mod.API;
 using Gemfruit.Mod.API.Events;
 using Gemfruit.Mod.API.Events.Items;
-using Gemfruit.Mod.API.Exceptions;
 using Gemfruit.Mod.API.Utility.Registry;
 using Gemfruit.Mod.Internal;
 
 namespace Gemfruit.Mod.Items
 {
-    public class ArtifactDropRegistry : PhasableRegistry
+    public class ArtifactDropRegistry : KeyedRegistry<ArtifactDropDataBuilder>
     {
         private static readonly Dictionary<ResourceKey, List<ArtifactDropData>> DropList
             = new Dictionary<ResourceKey, List<ArtifactDropData>>();
 
         private static readonly Dictionary<ResourceKey, Dictionary<ResourceKey, double>> VanillaPairs
             = new Dictionary<ResourceKey, Dictionary<ResourceKey, double>>();
+
+        protected override bool HasKey(ResourceKey key)
+        {
+            return false;
+        }
+
+        protected override void AddItem(ResourceKey key, ArtifactDropDataBuilder builder)
+        {
+            foreach (var loc in builder.DropChances.Keys)
+            {
+                if (!DropList.ContainsKey(loc))
+                {
+                    DropList.Add(loc, new List<ArtifactDropData>());
+                }
+
+                DropList[loc].Add(new ArtifactDropData(key, builder.DropChances[loc]));
+            }
+        }
 
         protected override void InitializeRecords()
         {
@@ -31,7 +48,7 @@ namespace Gemfruit.Mod.Items
             GemfruitMod.InitBus.FireEvent(new ArtifactDropRegistrationEvent(this, EventPhase.After));
         }
 
-        internal void AddVanillaItem(ResourceKey item, string line)
+        internal void ParseVanillaItem(ResourceKey item, string line)
         {
             var parts = line.Split('/');
             if (parts.Length >= 7)
@@ -62,35 +79,6 @@ namespace Gemfruit.Mod.Items
             {
                 GemfruitMod.Logger.Log(LogLevel.Warning, GetType().Name,
                     $"for some reason, '{item}' doesn't have a chance as an artifact");
-            }
-        }
-
-        public void Register(ResourceKey item, ArtifactDropDataBuilder builder)
-        {
-            if (CurrentPhase == RegistryPhase.Open)
-            {
-                if (DropList.ContainsKey(item))
-                {
-                    throw new RegistryConflictException(item);
-                }
-
-                GemfruitMod.Logger.Log(LogLevel.Debug, GetType().Name,
-                    $"Registering artifact drop '{item}'");
-
-                foreach (var loc in builder.DropChances.Keys)
-                {
-                    if (!DropList.ContainsKey(loc))
-                    {
-                        DropList.Add(loc, new List<ArtifactDropData>());
-                    }
-
-                    DropList[loc].Add(new ArtifactDropData(item, builder.DropChances[loc]));
-                }
-            }
-            else
-            {
-                GemfruitMod.Logger.Log(LogLevel.Error, GetType().Name,
-                    $"Attempted to register '{item}' before/after corresponding lifecycle event!");
             }
         }
     }
